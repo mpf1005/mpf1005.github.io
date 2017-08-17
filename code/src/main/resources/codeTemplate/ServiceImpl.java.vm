@@ -1,0 +1,61 @@
+package ${package}.business.service.impl;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+import ${package}.business.base.BaseService;
+import ${package}.business.base.IBaseDao;
+import ${package}.business.service.${className}Service;
+import ${package}.business.dao.${className}Mapper;
+import ${package}.bean.entity.${className};
+import java.util.List;
+
+
+
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Service("${classname}Service")
+@Transactional
+public class ${className}ServiceImpl extends BaseService<${className},${pk.attrType}> implements ${className}Service  {
+
+	@Autowired
+	private ${className}Mapper ${classname}Mapper;
+
+
+    @Override
+    protected IBaseDao <${className}> getBaseDao() {
+        return ${classname}Mapper;
+    }
+
+    /**
+     * 分页
+     * @param pageNum   页码
+     * @param pageSize  页数
+     * @param search  搜索内容
+     * @return PageInfo 分页信息
+     */
+    @Override
+    public PageInfo<${className}> pageList(int pageNum, int pageSize, String search) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<${className}> list = ${classname}Mapper.pageList(search);
+        PageInfo <${className}> pageInfo = new PageInfo <>(list);
+        return pageInfo;
+    }
+
+    /**
+     * 批量删除
+     * @param ${pk.attrname}s   id数组
+     */
+    @Override
+    public void deleteBatch(${pk.attrType} [] ${pk.attrname}s){
+        ${classname}Mapper.deleteBatch(${pk.attrname}s);
+    }
+}

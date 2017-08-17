@@ -1,0 +1,48 @@
+spring:
+   application:
+     name: web
+   profiles:
+#     active: dev       #这里是指使用application-dev.yml的配置，默认会采用
+   datasource:
+      type: com.alibaba.druid.pool.DruidDataSource      # 使用druid数据连接池
+      driverClassName: com.mysql.jdbc.Driver
+      filters: stat                                     #插件配置，使用StatFilter监控
+      maxActive: 80                                     #最大连接池数量
+      initialSize: 30                                   #初始化连接池数量
+      maxWait: 15000                                    # 配置获取连接等待超时的时间
+      minIdle: 20                                        #最小连接池数量
+      timeBetweenEvictionRunsMillis: 60000             #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      minEvictableIdleTimeMillis: 300000                #配置一个连接在池中最小生存的时间，单位是毫秒
+      validationQuery: select 1                          #用来检测连接是否有效的sql，要求是一个查询语句
+      testWhileIdle: true                                #建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测
+      testOnBorrow: false                                #申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。
+      testOnReturn: false                               #归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
+      poolPreparedStatements: false                      #是否缓存preparedStatement-PSCache。PSCache对支持游标的数据库性能提升巨大，如oracle。在mysql下建议关闭。
+      maxOpenPreparedStatements: 0                      #当大于0时，poolPreparedStatements自动触发修改为true。在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100
+
+      url: jdbc:mysql://localhost:3306/test?useSSL=true&useUnicode=true&characterEncoding=UTF-8
+      username: root
+      password: root
+
+server:
+    session:
+        cookie:
+            http-only: true
+banner:
+  location: classpath:banner.txt  #字体文件，可到http://patorjk.com/software/taag/生成字体
+#---------mybatis配置---------------
+mybatis:
+   typeAliasesPackage: com.offenhealth.hdmp.eshop.bean.entity   #实体扫描
+   mapper-locations: classpath:mapper/*.xml
+#通用mapper配置
+mapper:
+  mappers: com.offenhealth.hdmp.eshop.business.base.IBaseDao
+  not-empty: false
+  identity: SELECT REPLACE(UUID(),'-','')
+  before: true
+#分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

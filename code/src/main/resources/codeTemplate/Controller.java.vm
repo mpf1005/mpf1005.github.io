@@ -1,0 +1,102 @@
+package ${package}.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.*;
+import org.apache.commons.lang3.ArrayUtils;
+import ${package}.common.constants.ResultCode;
+import ${package}.common.constants.ResultResponse;
+import ${package}.common.util.BeanUtils;
+import ${package}.common.util.ResultUtil;
+import ${package}.bean.entity.${className};
+import ${package}.business.service.${className}Service;
+
+
+/**
+ * ${comments}
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+@RestController
+@RequestMapping("${pathName}")
+@Api( description="${comments}接口")
+public class ${className}Controller {
+	@Autowired
+	private ${className}Service ${classname}Service;
+
+    @RequestMapping(value="/list",method = RequestMethod.POST )
+    @ApiOperation(value = "${comments}分页列表",response = ${className}.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType="int", name = "pageNum", value = "页码，为空时默认1" ),
+            @ApiImplicitParam(paramType = "query", dataType="int", name = "pageSize", value = "页数,为空时默认20" ),
+            @ApiImplicitParam(paramType = "query", dataType="string", name = "search", value = "搜索字符" )
+    })
+    @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
+    public ResultResponse pageList(@RequestParam(defaultValue = "1") Integer pageNum,
+                                   @RequestParam(defaultValue = "20")Integer pageSize, String search)  {
+        return ResultUtil.getSuccess(${classname}Service.pageList(pageNum,pageSize,search));
+    }
+
+
+    @RequestMapping(value="/save",method = RequestMethod.POST )
+    @ApiOperation(value = "保存${comments}",response = ResultResponse.class)
+    @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
+    public ResultResponse save(${className} ${classname}){
+		${classname}Service.insert(${classname});
+        return ResultUtil.getSuccess();
+    }
+
+    @RequestMapping(value="/info",method = RequestMethod.GET )
+    @ApiOperation(value = "获取${comments}信息",response = ${className}.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType="${pk.attrType}", name = "${pk.attrname}", value = "${comments}id" ),
+    })
+    @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
+    public ResultResponse info(${pk.attrType} ${pk.attrname} ){
+		${className} ${classname} = ${classname}Service.selectByPrimaryKey(${pk.attrname});
+        if (${classname} == null ){
+            return ResultUtil.getError(ResultCode.DATA_NOT_EXIST.getCode());
+        }
+        return ResultUtil.getSuccess(${classname});
+    }
+
+
+    @RequestMapping(value="/update",method = RequestMethod.POST)
+    @ApiOperation(value = "更新${comments}",response = ResultResponse.class)
+    @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
+    public ResultResponse update(${className} vo){
+        if ( vo == null) {
+            return ResultUtil.getError(ResultCode.PARAM_ERROR.getCode());
+        }
+		${className} po = ${classname}Service.selectByPrimaryKey(vo.get${pk.attrName}());
+        if ( po == null) {
+            return ResultUtil.getError(ResultCode.PARAM_ERROR.getCode());
+        }
+        BeanUtils.copyProperties(vo,po, BeanUtils.getNullPropertyNames(vo));
+        //更新
+	    ${classname}Service.updateByPrimaryKey(po);
+        return ResultUtil.getSuccess();
+    }
+	
+
+
+    @RequestMapping(value="/deleteBatch",method = RequestMethod.POST)
+    @ApiOperation(value = "批量删除${comments}",response = ResultResponse.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType="array", name = "${pk.attrname}s", value = "${comments}id数组" ),
+    })
+    @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
+    public ResultResponse deleteBatch(${pk.attrType} [] ${pk.attrname}s){
+        if (ArrayUtils.isEmpty(${pk.attrname}s)) {
+            return ResultUtil.getError(ResultCode.PARAM_ERROR.getCode());
+        }
+		${classname}Service.deleteBatch(${pk.attrname}s);
+        return ResultUtil.getSuccess();
+    }
+
+	
+}

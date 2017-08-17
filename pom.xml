@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>eshop</artifactId>
+    <groupId>com.offenhealth</groupId>
+    <packaging>pom</packaging>
+    <version>0.1</version>
+
+    <repositories>
+        <repository>
+            <id>offengroup</id>
+            <name>offengroup Repository</name>
+            <url>http://123.56.95.42:5080/repository/maven-public</url>
+        </repository>
+    </repositories>
+	
+    <modules>
+        <!--通用工具、属性模块-->
+        <module>common</module>
+        <!--业务逻辑模块-->
+        <module>business</module>
+        <!--实体模块-->
+        <module>bean</module>
+        <!--代码生成模块-->
+        <module>code</module>
+        <!--控制模块-->
+        <module>web</module>
+    </modules>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.2.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+
+    <!--版本属性-->
+    <properties>
+        <out.version>0.1</out.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <commons-lang3.version>3.0</commons-lang3.version>
+        <guava.version>21.0</guava.version>
+        <springloaded.version>1.2.6.RELEASE</springloaded.version>
+        <fastjson.version>1.2.17</fastjson.version>
+        <cglib.version>3.2.5</cglib.version>
+        <swagger2.version>2.6.1</swagger2.version>
+
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.offenhealth</groupId>
+                <artifactId>common</artifactId>
+                <version>0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.offenhealth</groupId>
+                <artifactId>bean</artifactId>
+                <version>0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.offenhealth</groupId>
+                <artifactId>business</artifactId>
+                <version>0.1</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+        <dependencies>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-logging</artifactId>
+            </dependency>
+            <!--相关工具包-->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                <version>${cglib.version}</version>
+            </dependency>
+            <!--文档生成插件swagger2-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+
+        </dependencies>
+
+</project>

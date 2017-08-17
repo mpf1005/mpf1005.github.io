@@ -1,0 +1,7 @@
+#自动配置，为了让其他模块能直接使用，需要在这里指定配置属性
+#这里的斜杆是为了换行能读取到，若有多个，用英文逗号隔开
+
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.offenhealth.hdmp.eshop.common.config.RedisConfig,\
+com.offenhealth.hdmp.eshop.common.config.Swagger2Config

@@ -1,0 +1,31 @@
+package ${package}.business.service;
+
+import  ${package}.bean.entity.${className};
+import  ${package}.business.base.IBaseService;
+import com.github.pagehelper.PageInfo;
+
+/**
+ * ${comments}
+ * @author ${author}
+ * @date ${datetime}
+ */
+public interface ${className}Service  extends IBaseService<${className}, ${pk.attrType}> {
+
+
+    /**
+     * 分页
+     * @param pageNum   页码
+     * @param pageSize  页数
+     * @param search  搜索内容
+     * @return PageInfo 分页信息
+     */
+    public PageInfo<${className}> pageList(int pageNum, int pageSize, String search) ;
+
+    /**
+     * 批量删除
+     * @param ${pk.attrname}s   id数组
+     */
+    public void deleteBatch(${pk.attrType} [] ${pk.attrname}s);
+
+
+}

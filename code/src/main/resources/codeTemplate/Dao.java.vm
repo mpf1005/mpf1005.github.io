@@ -1,0 +1,21 @@
+package ${package}.dao;
+
+import java.util.List;
+import ${package}.business.base.IBaseDao;
+import ${package}.bean.entity.${className};
+import org.apache.ibatis.annotations.Param;
+
+
+/**
+ * ${comments}
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+public interface ${className}Mapper extends IBaseDao<${className}> {
+
+    List<${className}> pageList(@Param("search") String search);
+
+    void deleteBatch(@Param("${pk.attrname}s") ${pk.attrType} [] ${pk.attrname}s);
+
+}

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false" scanPeriod="60 seconds" debug="false">
+    <!--定义日志文件的存储地址(绝对路径) -->
+    <property name="log_home" value="F:/data/LOG/oa/admin" />
+    <!--生成日志的名称-->
+    <property name="project_name" value="spBoot_admin" />
+    <!-- 日志输出到控制台 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <!-- %d表示日期, %thread表示线程名, %-5level级别从左显示5个字符宽度, %msg日志消息 %n是换行符 -->
+            <pattern>%d{MM-HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n
+            </pattern>
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+    </appender>
+
+    <!--错误信息输出配置-->
+    <appender name="consoleError" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.err</target>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <!-- %d表示日期, %thread表示线程名, %-5level级别从左显示5个字符宽度, %msg日志消息 %n是换行符 -->
+            <pattern>%d{MM-HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n
+            </pattern>
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 日志输出到文件(每天生成) -->
+    <appender name="file"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log_home}/${project_name}.%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{MM-HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n
+            </pattern>
+        </layout>
+        <!--日志文件最大的大小 -->
+        <triggeringPolicy  class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>1024MB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+    <!--过滤某些目录打印日志的级别-->
+    <logger name="logback" level="ERROR" />
+    <logger name="org.springframework" level="ERROR" />
+    <logger name="org.beetl" level="ERROR" />            <!--页面模板-->
+    <logger name="com.offenhealth.hdmp" level="DEBUG" />       <!--项目相关-->
+    <logger name="org.apache.ibatis" level="INFO" />    <!--mybatis-->
+    <logger name="tk.mybatis" level="ERROR" />
+
+
+    <root level="DEBUG">
+        <!--追加到某些配置上，如上面的配置-->
+        <appender-ref ref="console" />
+        <appender-ref ref="file" />
+        <appender-ref ref="consoleError" />
+    </root>
+</configuration>
