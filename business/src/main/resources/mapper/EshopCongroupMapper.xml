@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.offenhealth.hdmp.eshop.business.dao.EshopCongroupMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.offenhealth.hdmp.eshop.bean.entity.EshopCongroup" id="eshopCongroupMap">
+        <result property="id" column="ID"/>
+        <result property="code" column="CODE"/>
+        <result property="name" column="NAME"/>
+        <result property="description" column="DESCRIPTION"/>
+        <result property="status" column="STATUS"/>
+        <result property="createUser" column="CREATE_USER"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="lastMUser" column="LAST_M_USER"/>
+        <result property="lastMTime" column="LAST_M_TIME"/>
+        <result property="version" column="VERSION"/>
+    </resultMap>
+
+
+    <select id="pageList" resultMap="eshopCongroupMap">
+        SELECT * FROM ESHOP_CONGROUP
+        WHERE 1 = 1
+        <if test="search != null and search.trim() != ''">
+        </if>
+    </select>
+
+
+	<delete id="deleteBatch">
+		delete from ESHOP_CONGROUP where ID in 
+		<foreach item="id" collection="ids" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
