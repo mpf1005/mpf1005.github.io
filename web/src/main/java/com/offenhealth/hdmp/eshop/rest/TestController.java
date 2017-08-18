@@ -2,10 +2,7 @@ package com.offenhealth.hdmp.eshop.rest;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.*;
 import org.apache.commons.lang3.ArrayUtils;
 import com.offenhealth.hdmp.eshop.common.constants.ResultCode;
@@ -46,10 +43,7 @@ public class TestController {
     @RequestMapping(value="/save",method = RequestMethod.POST )
     @ApiOperation(value = "保存",response = ResultResponse.class)
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
-    public ResultResponse save(Test test){
-        JSONObject jo=new  JSONObject();
-        jo.put("aaa","bbb");
-        test.setJon(jo);
+    public ResultResponse save(@RequestBody Test test){
 		testService.insert(test);
         return ResultUtil.getSuccess();
     }
