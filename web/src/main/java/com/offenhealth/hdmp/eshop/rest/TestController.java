@@ -1,6 +1,7 @@
 package com.offenhealth.hdmp.eshop.rest;
 
 import com.alibaba.fastjson.JSONObject;
+import com.offenhealth.hdmp.eshop.bean.vo.TestVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.*;
@@ -11,6 +12,8 @@ import com.offenhealth.hdmp.eshop.common.util.BeanUtils;
 import com.offenhealth.hdmp.eshop.common.util.ResultUtil;
 import com.offenhealth.hdmp.eshop.bean.entity.Test;
 import com.offenhealth.hdmp.eshop.business.service.TestService;
+
+import java.util.List;
 
 
 /**
@@ -94,6 +97,24 @@ public class TestController {
         }
 		testService.deleteBatch(ids);
         return ResultUtil.getSuccess();
+    }
+
+
+
+    @RequestMapping(value="/findResourceByNewInstance",method = RequestMethod.GET )
+    @ApiOperation(value = "反射测试查询资源列表",response = Test.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType="String", name = "id", value = "id" ),
+    })
+    @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
+    public ResultResponse findResourceByNewInstance(String id)throws Exception{
+        //反射
+        Class aClass = Class.forName("com.offenhealth.hdmp.eshop.bean.vo.TestVO");
+        TestVO testVO = (TestVO) aClass.newInstance();//获取类的实例
+        testVO.setId(id);
+        List<Test> select = testService.select(testVO);
+        String s = JSONObject.toJSONString(select);
+        return ResultUtil.getSuccess(s);
     }
 
 	
