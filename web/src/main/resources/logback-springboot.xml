@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="false" scanPeriod="60 seconds" debug="false">
     <!--定义日志文件的存储地址(绝对路径) -->
-    <property name="log_home" value="F:/data/LOG/oa/admin" />
+    <property name="log_home" value="./log" />
     <!--生成日志的名称-->
     <property name="project_name" value="spBoot_admin" />
     <!-- 日志输出到控制台 -->
