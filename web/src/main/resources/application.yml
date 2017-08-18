@@ -4,7 +4,7 @@ spring:
 #   profiles:
 ##     active: dev       #这里是指使用application-dev.yml的配置，默认会采用
    datasource:
-      url: jdbc:mysql://192.168.0.146:3307/test?useSSL=true&useUnicode=true&characterEncoding=UTF-8
+      url: jdbc:mysql://192.168.0.146:3307/test?useSSL=false&useUnicode=true&characterEncoding=UTF-8
       username: root
       password: offen
       type: com.alibaba.druid.pool.DruidDataSource      # 使用druid数据连接池
