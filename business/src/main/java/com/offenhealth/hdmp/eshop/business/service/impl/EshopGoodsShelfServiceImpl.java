@@ -9,9 +9,9 @@ import com.github.pagehelper.PageInfo;
 
 import com.offenhealth.hdmp.eshop.business.base.BaseService;
 import com.offenhealth.hdmp.eshop.business.base.IBaseDao;
-import com.offenhealth.hdmp.eshop.business.service.TestService;
-import com.offenhealth.hdmp.eshop.business.dao.TestMapper;
-import com.offenhealth.hdmp.eshop.bean.entity.Test;
+import com.offenhealth.hdmp.eshop.business.service.EshopGoodsShelfService;
+import com.offenhealth.hdmp.eshop.business.dao.EshopGoodsShelfMapper;
+import com.offenhealth.hdmp.eshop.bean.entity.EshopGoodsShelf;
 import java.util.List;
 
 
@@ -20,20 +20,19 @@ import java.util.List;
  * 
  *
  * @author hhy
- * @date 2017-08-17 15:35:21
+ * @date 2017-08-21 15:36:33
  */
-@Service("testService")
+@Service("eshopGoodsShelfService")
 @Transactional
-public class TestServiceImpl extends BaseService<Test,String> implements TestService  {
+public class EshopGoodsShelfServiceImpl extends BaseService<EshopGoodsShelf,String> implements EshopGoodsShelfService  {
 
-
-    @Autowired
-	private TestMapper testMapper;
+	@Autowired
+	private EshopGoodsShelfMapper eshopGoodsShelfMapper;
 
 
     @Override
-    protected IBaseDao <Test> getBaseDao() {
-        return testMapper;
+    protected IBaseDao <EshopGoodsShelf> getBaseDao() {
+        return eshopGoodsShelfMapper;
     }
 
     /**
@@ -43,16 +42,11 @@ public class TestServiceImpl extends BaseService<Test,String> implements TestSer
      * @param search  搜索内容
      * @return PageInfo 分页信息
      */
-    /*
-    *@Author:johnson
-    *@Description:商品管理列表展示
-    *@Date:14:08 2017/8/21
-    */
     @Override
-    public PageInfo<Test> pageList(int pageNum, int pageSize, String search) {
+    public PageInfo<EshopGoodsShelf> pageList(int pageNum, int pageSize, String search) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Test> list = testMapper.pageList(search);
-        PageInfo <Test> pageInfo = new PageInfo <>(list);
+        List<EshopGoodsShelf> list = eshopGoodsShelfMapper.pageList(search);
+        PageInfo <EshopGoodsShelf> pageInfo = new PageInfo <>(list);
         return pageInfo;
     }
 
@@ -62,6 +56,6 @@ public class TestServiceImpl extends BaseService<Test,String> implements TestSer
      */
     @Override
     public void deleteBatch(String [] ids){
-        testMapper.deleteBatch(ids);
+        eshopGoodsShelfMapper.deleteBatch(ids);
     }
 }
