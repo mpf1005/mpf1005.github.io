@@ -1,19 +1,16 @@
 package com.offenhealth.hdmp.eshop.rest;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import io.swagger.annotations.*;
-import org.apache.commons.lang3.ArrayUtils;
+import com.github.pagehelper.PageInfo;
+import com.offenhealth.hdmp.eshop.bean.entity.EshopProgroup;
+import com.offenhealth.hdmp.eshop.bean.vo.EshopProgroupVO;
+import com.offenhealth.hdmp.eshop.business.service.EshopProgroupService;
 import com.offenhealth.hdmp.eshop.common.constants.ResultCode;
 import com.offenhealth.hdmp.eshop.common.constants.ResultResponse;
-import com.offenhealth.hdmp.eshop.common.util.BeanUtils;
 import com.offenhealth.hdmp.eshop.common.util.ResultUtil;
-import com.offenhealth.hdmp.eshop.bean.entity.EshopProgroup;
-import com.offenhealth.hdmp.eshop.business.service.EshopProgroupService;
-
+import io.swagger.annotations.*;
+import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 
@@ -22,14 +19,22 @@ import com.offenhealth.hdmp.eshop.business.service.EshopProgroupService;
  * @date 2017-08-18 16:57:44
  */
 @RestController
-@RequestMapping("eshopprogroup")
-@Api( description="接口")
+@RequestMapping("project-group")
+@Api( description="项目分组管理")
 public class EshopProgroupController {
+    /*
+     *注入eshopProgroupService接口
+     */
 	@Autowired
 	private EshopProgroupService eshopProgroupService;
-
+    /**
+     *
+     *
+     * @author 王杰
+     * @date 2017-08-21 13:14:44
+     */
     @RequestMapping(value="/list",method = RequestMethod.POST )
-    @ApiOperation(value = "分页列表",response = EshopProgroup.class)
+    @ApiOperation(value = "读取项目分组的列表(含分页，模糊查询)",response = EshopProgroup.class)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", dataType="int", name = "pageNum", value = "页码，为空时默认1" ),
             @ApiImplicitParam(paramType = "query", dataType="int", name = "pageSize", value = "页数,为空时默认20" ),
@@ -38,51 +43,61 @@ public class EshopProgroupController {
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
     public ResultResponse pageList(@RequestParam(defaultValue = "1") Integer pageNum,
                                    @RequestParam(defaultValue = "20")Integer pageSize, String search)  {
-        return ResultUtil.getSuccess(eshopProgroupService.pageList(pageNum,pageSize,search));
+        PageInfo<EshopProgroupVO> eshopProgroupVOPageInfo = eshopProgroupService.pageList(pageNum, pageSize, search);
+        return ResultUtil.getSuccess(eshopProgroupVOPageInfo);
     }
 
-
-    @RequestMapping(value="/save",method = RequestMethod.POST )
-    @ApiOperation(value = "保存",response = ResultResponse.class)
-    @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
-    public ResultResponse save(EshopProgroup eshopProgroup){
-		eshopProgroupService.insert(eshopProgroup);
-        return ResultUtil.getSuccess();
-    }
-
-    @RequestMapping(value="/info",method = RequestMethod.GET )
+    /**
+     *
+     * 读取特定项目分组
+     * @author 王杰
+     * @date 2017-08-21 15:56:23
+     */
+    @RequestMapping(value="/{id}",method = RequestMethod.GET )
     @ApiOperation(value = "获取信息",response = EshopProgroup.class)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", dataType="String", name = "id", value = "id" ),
     })
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
-    public ResultResponse info(String id ){
-		EshopProgroup eshopProgroup = eshopProgroupService.selectByPrimaryKey(id);
-        if (eshopProgroup == null ){
+    public ResultResponse info(String id){
+        EshopProgroupVO eshopProgroupVO = eshopProgroupService.selectGroupByPrimaryKey(id);
+        if (eshopProgroupVO == null ){
             return ResultUtil.getError(ResultCode.DATA_NOT_EXIST.getCode());
         }
-        return ResultUtil.getSuccess(eshopProgroup);
+        return ResultUtil.getSuccess(eshopProgroupVO);
     }
 
+    /**
+     *
+     * 新建项目分组
+     * @author 王杰
+     * @date 2017-08-21 14:41:16
+     */
+    @RequestMapping(value="/create",method = RequestMethod.POST )
+    @ApiOperation(value = "新建项目分组",response = ResultResponse.class)
+    @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
+    public ResultResponse save(@RequestBody EshopProgroup eshopProgroup){
+        eshopProgroupService.insert(eshopProgroup);
+        return ResultUtil.getSuccess("id",eshopProgroup.getId());
+    }
 
+    /**
+     *
+     * 编辑项目分组
+     * @author 王杰
+     * @date 2017-08-21 14:41:16
+     */
     @RequestMapping(value="/update",method = RequestMethod.POST)
     @ApiOperation(value = "更新",response = ResultResponse.class)
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
-    public ResultResponse update(EshopProgroup vo){
-        if ( vo == null) {
+    public ResultResponse update(@RequestBody EshopProgroup eshopProgroup){
+        if ( eshopProgroup == null) {
             return ResultUtil.getError(ResultCode.PARAM_ERROR.getCode());
         }
-		EshopProgroup po = eshopProgroupService.selectByPrimaryKey(vo.getId());
-        if ( po == null) {
-            return ResultUtil.getError(ResultCode.PARAM_ERROR.getCode());
-        }
-        BeanUtils.copyProperties(vo,po, BeanUtils.getNullPropertyNames(vo));
         //更新
-	    eshopProgroupService.updateByPrimaryKey(po);
+	    eshopProgroupService.updateByPrimaryKey(eshopProgroup);
         return ResultUtil.getSuccess();
     }
-	
-
 
     @RequestMapping(value="/deleteBatch",method = RequestMethod.POST)
     @ApiOperation(value = "批量删除",response = ResultResponse.class)

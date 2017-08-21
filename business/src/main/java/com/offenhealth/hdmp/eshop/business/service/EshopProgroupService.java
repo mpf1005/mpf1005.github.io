@@ -1,8 +1,9 @@
 package com.offenhealth.hdmp.eshop.business.service;
 
-import  com.offenhealth.hdmp.eshop.bean.entity.EshopProgroup;
-import  com.offenhealth.hdmp.eshop.business.base.IBaseService;
 import com.github.pagehelper.PageInfo;
+import com.offenhealth.hdmp.eshop.bean.entity.EshopProgroup;
+import com.offenhealth.hdmp.eshop.bean.vo.EshopProgroupVO;
+import com.offenhealth.hdmp.eshop.business.base.IBaseService;
 
 /**
  * 
@@ -19,7 +20,25 @@ public interface EshopProgroupService  extends IBaseService<EshopProgroup, Strin
      * @param search  搜索内容
      * @return PageInfo 分页信息
      */
-    public PageInfo<EshopProgroup> pageList(int pageNum, int pageSize, String search) ;
+    public PageInfo<EshopProgroupVO> pageList(int pageNum, int pageSize, String search) ;
+
+    /**
+     * 读取特定项目分组
+     * @param String id
+     */
+    public EshopProgroupVO selectGroupByPrimaryKey(String id);
+
+    /**
+     * 新建项目分组
+     * @param EshopProgroup eshopProgroup
+     */
+    public int insert(EshopProgroup eshopProgroup);
+
+    /**
+     * 编辑项目分组
+     * @param EshopProgroup eshopProgroup
+     */
+    public int updateByPrimaryKey(EshopProgroup eshopProgroup);
 
     /**
      * 批量删除
