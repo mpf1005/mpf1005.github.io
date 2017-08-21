@@ -18,4 +18,6 @@ public interface EshopConsumableGroupMapper extends IBaseDao<EshopConsumableGrou
 
     void deleteBatch(@Param("ids") String [] ids);
 
+    int getCountByGroupID(@Param("id") String  id);
+
 }

@@ -23,7 +23,15 @@ public enum ResultCode {
     ACCOUNT_TRY_TOO_MORE(1006, "登录尝试次数过多，请10分钟后重试") ,ACCOUNT_LOCKED(1007, "账号被锁定") ,
     ACCOUNT_NOT_OPEN(1008, "未开放登录的用户") ,CAPTCHA_ERROR(1009, "验证码错误."),
     //-----------------------其他1300~~~~ -----------------------------------
-    REGISTER_MODIFY_REPEAT(1300, "报名申请修改信息重复提交.");
+    REGISTER_MODIFY_REPEAT(1300, "报名申请修改信息重复提交."),
+
+    // ---------------------自定义状态信息---------------------------
+    NO_GROUP_BY_ID(10001,"分组不存在"),
+    NAME_CANNOT_BE_EMPTY(10002,"name不能为空");
+
+
+
+
 
     private int code;
     private String msg;

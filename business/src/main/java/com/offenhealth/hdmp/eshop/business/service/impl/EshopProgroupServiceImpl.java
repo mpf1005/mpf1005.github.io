@@ -1,6 +1,7 @@
 package com.offenhealth.hdmp.eshop.business.service.impl;
 
 
+import com.offenhealth.hdmp.eshop.business.dao.EshopProgroupMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +11,7 @@ import com.github.pagehelper.PageInfo;
 import com.offenhealth.hdmp.eshop.business.base.BaseService;
 import com.offenhealth.hdmp.eshop.business.base.IBaseDao;
 import com.offenhealth.hdmp.eshop.business.service.EshopProgroupService;
-import com.offenhealth.hdmp.eshop.business.dao.EshopProgroupMapper;
+
 import com.offenhealth.hdmp.eshop.bean.entity.EshopProgroup;
 import java.util.List;
 

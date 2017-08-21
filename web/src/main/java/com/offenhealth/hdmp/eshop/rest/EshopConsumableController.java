@@ -1,10 +1,7 @@
 package com.offenhealth.hdmp.eshop.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.*;
 import org.apache.commons.lang3.ArrayUtils;
 import com.offenhealth.hdmp.eshop.common.constants.ResultCode;
@@ -17,7 +14,7 @@ import com.offenhealth.hdmp.eshop.business.service.EshopConsumableService;
 
 /**
  * 
- * 
+ *
  * @author hhy
  * @date 2017-08-18 16:57:44
  */
@@ -45,7 +42,7 @@ public class EshopConsumableController {
     @RequestMapping(value="/save",method = RequestMethod.POST )
     @ApiOperation(value = "保存",response = ResultResponse.class)
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
-    public ResultResponse save(EshopConsumable eshopConsumable){
+    public ResultResponse save( @RequestBody  EshopConsumable eshopConsumable){
 		eshopConsumableService.insert(eshopConsumable);
         return ResultUtil.getSuccess();
     }

@@ -33,4 +33,9 @@
 		</foreach>
 	</delete>
 
+    <select id="getCountByGroupID" parameterType="String" resultType="java.lang.Integer">
+
+    SELECT COUNT(id) FROM eshop_consumable_group WHERE GROUP_ID=#{id}
+
+    </select>
 </mapper>
