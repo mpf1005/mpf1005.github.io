@@ -1,12 +1,12 @@
 package com.offenhealth.hdmp.eshop.bean.entity;
 
-import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 
 
@@ -45,7 +45,7 @@ public class EshopProject   {
 		private Date lastMTime;
 		@ApiModelProperty(value  = "")
 		private String version;
-	
+
 	/**
 	 * 设置：
 	 */

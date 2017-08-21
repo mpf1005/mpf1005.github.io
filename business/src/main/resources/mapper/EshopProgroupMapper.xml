@@ -4,7 +4,7 @@
 <mapper namespace="com.offenhealth.hdmp.eshop.business.dao.EshopProgroupMapper">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.offenhealth.hdmp.eshop.bean.entity.EshopProgroup" id="eshopProgroupMap">
+    <resultMap type="com.offenhealth.hdmp.eshop.bean.vo.EshopProgroupVO" id="eshopProgroupMap">
         <result property="id" column="ID"/>
         <result property="code" column="CODE"/>
         <result property="name" column="NAME"/>
@@ -16,15 +16,17 @@
         <result property="lastMTime" column="LAST_M_TIME"/>
         <result property="version" column="VERSION"/>
     </resultMap>
-
-
+    <!--读取项目分组的列表(含分页，模糊查询)-->
     <select id="pageList" resultMap="eshopProgroupMap">
-        SELECT * FROM ESHOP_PROGROUP
+        SELECT * FROM eshop_progroup
         WHERE 1 = 1
         <if test="search != null and search.trim() != ''">
         </if>
     </select>
-
+    <!--读取项目分组项目的数量-->
+    <select id="getEshopProjects" resultType="int">
+        SELECT count(*) projectNumber FROM eshop_project p LEFT JOIN eshop_project_group pg ON p.ID=pg.PROJECT_ID where pg.GROUP_ID=#{id}
+    </select>
 
 	<delete id="deleteBatch">
 		delete from ESHOP_PROGROUP where ID in 
