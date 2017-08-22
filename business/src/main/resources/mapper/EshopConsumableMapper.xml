@@ -19,6 +19,28 @@
         <result property="version" column="VERSION"/>
     </resultMap>
 
+    <!--查询特定耗材-->
+    <resultMap type="com.offenhealth.hdmp.eshop.bean.vo.EshopConsumableVO" id="queryEshopConsumableMap">
+        <result property="id" column="ID"/>
+        <result property="name" column="NAME"/>
+        <result property="price" column="PRICE"/>
+        <result property="amount" column="AMOUNT"/>
+        <collection property="eshopCongroup" ofType="com.offenhealth.hdmp.eshop.bean.entity.EshopCongroup" column="id" select="queryConGroup"></collection>
+    </resultMap>
+
+    <resultMap type="com.offenhealth.hdmp.eshop.bean.entity.EshopCongroup" id="eshopCongroupMap">
+        <result property="id" column="ID"/>
+        <result property="code" column="CODE"/>
+        <result property="name" column="NAME"/>
+        <result property="description" column="DESCRIPTION"/>
+        <result property="status" column="STATUS"/>
+        <result property="createUser" column="CREATE_USER"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="lastMUser" column="LAST_M_USER"/>
+        <result property="lastMTime" column="LAST_M_TIME"/>
+        <result property="version" column="VERSION"/>
+    </resultMap>
+
 
     <select id="pageList" resultMap="eshopConsumableMap">
         SELECT * FROM eshop_consumable
@@ -29,6 +51,16 @@
 
     <select id="countConsumableNum" resultType="java.lang.Integer">
         SELECT COUNT(id) FROM eshop_consumable
+    </select>
+
+
+    <!--查询特定耗材-->
+    <select id="queryConsumablesInfo" resultMap="queryEshopConsumableMap">
+        select ec.id,ec.`NAME`,ec.PRICE,ec.AMOUNT from eshop_consumable ec where ec.ID=#{id}
+    </select>
+
+    <select id="queryConGroup" resultMap="eshopCongroupMap">
+        select ec.ID,ec.`NAME` from eshop_consumable_group ecg,eshop_congroup ec where ecg.GROUP_ID=ec.ID and ec.ID=#{id}
     </select>
 
 

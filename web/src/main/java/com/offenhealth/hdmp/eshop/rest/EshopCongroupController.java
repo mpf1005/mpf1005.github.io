@@ -1,19 +1,17 @@
 package com.offenhealth.hdmp.eshop.rest;
 
+import com.offenhealth.hdmp.eshop.bean.entity.EshopCongroup;
 import com.offenhealth.hdmp.eshop.bean.vo.EshopCongroupVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import io.swagger.annotations.*;
-import org.apache.commons.lang3.ArrayUtils;
+import com.offenhealth.hdmp.eshop.bean.vo.EshopConsumableVO;
+import com.offenhealth.hdmp.eshop.business.service.EshopCongroupService;
 import com.offenhealth.hdmp.eshop.common.constants.ResultCode;
 import com.offenhealth.hdmp.eshop.common.constants.ResultResponse;
-import com.offenhealth.hdmp.eshop.common.util.BeanUtils;
 import com.offenhealth.hdmp.eshop.common.util.ResultUtil;
-import com.offenhealth.hdmp.eshop.bean.entity.EshopCongroup;
-import com.offenhealth.hdmp.eshop.business.service.EshopCongroupService;
+import io.swagger.annotations.*;
+import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
-
-import javax.persistence.Id;
 
 
 /**
@@ -28,6 +26,7 @@ import javax.persistence.Id;
 public class EshopCongroupController {
 	@Autowired
 	private EshopCongroupService eshopCongroupService;
+
 
     @RequestMapping(value="/list",method = RequestMethod.GET )
     @ApiOperation(value = "耗材分组列表",response = EshopCongroup.class)
@@ -45,6 +44,7 @@ public class EshopCongroupController {
        eshopCongroupService.insert(eshopCongroup);
         return  ResultUtil.getSuccess("id",eshopCongroup.getId());
     }
+
 
     @RequestMapping(value="/{id}",method = RequestMethod.GET )
     @ApiOperation(value = "获取特定耗材分组信息",response = EshopCongroup.class)
