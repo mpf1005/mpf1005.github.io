@@ -1,9 +1,8 @@
 package com.offenhealth.hdmp.eshop.business.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.offenhealth.hdmp.eshop.bean.entity.EshopProgroup;
 import com.offenhealth.hdmp.eshop.bean.vo.EshopProgroupVO;
+import com.offenhealth.hdmp.eshop.bean.vo.EshopProgroupCountVO;
 import com.offenhealth.hdmp.eshop.business.base.BaseService;
 import com.offenhealth.hdmp.eshop.business.base.IBaseDao;
 import com.offenhealth.hdmp.eshop.business.dao.EshopProgroupMapper;
@@ -14,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Date;
 import java.util.List;
 
@@ -45,17 +45,18 @@ public class EshopProgroupServiceImpl extends BaseService<EshopProgroup,String> 
      * @param search  搜索内容
      * @return PageInfo 分页信息
      */
-    @Override
-    public PageInfo<EshopProgroupVO> pageList(int pageNum, int pageSize, String search) {
-        PageHelper.startPage(pageNum, pageSize);
+    public EshopProgroupCountVO pageList(int pageNum, int pageSize, String search) {
+        EshopProgroupCountVO eshopProjectVO = new EshopProgroupCountVO();
+        int getcount = eshopProgroupMapper.getcount();
         List<EshopProgroupVO> list = eshopProgroupMapper.pageList(search);
         for(EshopProgroupVO eshopProgroup:list){
             //读取项目分组项目的数量
             int count=eshopProgroupMapper.getEshopProjects(eshopProgroup.getId());
             eshopProgroup.setProjectNumber(count);
         }
-        PageInfo <EshopProgroupVO> pageInfo = new PageInfo <>(list);
-        return pageInfo;
+        eshopProjectVO.setCount(getcount);
+        eshopProjectVO.setEshopProgroupVOS(list);
+        return eshopProjectVO;
     }
     /**
      * 读取特定项目分组
@@ -111,6 +112,16 @@ public class EshopProgroupServiceImpl extends BaseService<EshopProgroup,String> 
         eshopProgroup.setLastMUser("bb");
         eshopProgroup.setLastMTime(new Date());
         return eshopProgroupMapper.updateByPrimaryKey(eshopProgroup);
+    }
+
+    /**
+     * 删除项目的分组
+     * @param ids  id
+     */
+    @Override
+    public int deleteByPrimaryKey(String id)
+    {
+        return eshopProgroupMapper.deleteByPrimaryKey(id);
     }
 
     /**
