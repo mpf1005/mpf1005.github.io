@@ -3,7 +3,7 @@ package com.offenhealth.hdmp.eshop.common.util;
 /**
  * Created by Administrator on 2017/8/15 0015.
  */
-public class Userutil {
+public class UserUtil {
 
     /**
      * 获取当前登录用户

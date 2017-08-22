@@ -1,6 +1,10 @@
 package com.offenhealth.hdmp.eshop.business.service.impl;
 
 
+import com.offenhealth.hdmp.eshop.bean.entity.EshopConPro;
+import com.offenhealth.hdmp.eshop.business.dao.EshopConProMapper;
+import com.offenhealth.hdmp.eshop.common.constants.ResultCode;
+import com.offenhealth.hdmp.eshop.common.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +32,8 @@ public class EshopConsumableServiceImpl extends BaseService<EshopConsumable,Stri
 
 	@Autowired
 	private EshopConsumableMapper eshopConsumableMapper;
-
+    @Autowired
+    private EshopConProMapper eshopConProMapper;
 
     @Override
     protected IBaseDao <EshopConsumable> getBaseDao() {
@@ -57,5 +62,22 @@ public class EshopConsumableServiceImpl extends BaseService<EshopConsumable,Stri
     @Override
     public void deleteBatch(String [] ids){
         eshopConsumableMapper.deleteBatch(ids);
+    }
+
+    @Override
+    public void deleteConsumable(String id) {
+        //先查询有没有这个耗材
+        EshopConsumable consumable = eshopConsumableMapper.selectByPrimaryKey(id);
+        if (consumable==null){
+            throw  new ServiceException(ResultCode.NO_CONSUNABLE_BY_ID.getCode(),ResultCode.NO_CONSUNABLE_BY_ID.getMsg());
+        }
+        EshopConPro eshopConPro =new EshopConPro();
+        eshopConPro.setConsumableId(id);
+        //查询这个耗材有没有跟项目关联
+        List<EshopConPro> selectList = eshopConProMapper.select(eshopConPro);
+        if (selectList.size()>0){
+            throw  new ServiceException(ResultCode.CANT_DELECT_CONSUNABLE.getCode(),ResultCode.CANT_DELECT_CONSUNABLE.getMsg());
+        }
+        eshopConsumableMapper.delete(consumable);
     }
 }

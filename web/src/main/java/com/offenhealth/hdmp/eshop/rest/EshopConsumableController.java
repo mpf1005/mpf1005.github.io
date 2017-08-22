@@ -94,6 +94,17 @@ public class EshopConsumableController {
 		eshopConsumableService.deleteBatch(ids);
         return ResultUtil.getSuccess();
     }
+    @RequestMapping(value="/{id}/delete",method = RequestMethod.POST)
+    @ApiOperation(value = "删除单个耗材",response = ResultResponse.class)
+
+    @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
+    public ResultResponse deleteConsumable( @PathVariable String  id){
+        if (id==null) {
+            return ResultUtil.getError(ResultCode.PARAM_ERROR.getCode());
+        }
+        eshopConsumableService.deleteConsumable(id);
+        return ResultUtil.getSuccess();
+    }
 
 	
 }

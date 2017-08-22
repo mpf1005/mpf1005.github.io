@@ -27,7 +27,12 @@ public enum ResultCode {
 
     // ---------------------自定义状态信息---------------------------
     NO_GROUP_BY_ID(10001,"分组不存在"),
-    NAME_CANNOT_BE_EMPTY(10002,"name不能为空");
+
+    NAME_CANNOT_BE_EMPTY(10002,"name不能为空"),
+
+    NO_CONSUNABLE_BY_ID(10004,"耗材不存在"),
+
+    CANT_DELECT_CONSUNABLE(10005,"这个耗材在某个项目中存在");
 
 
 
