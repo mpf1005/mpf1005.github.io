@@ -1,6 +1,7 @@
 package com.offenhealth.hdmp.eshop.business.service;
 
 import  com.offenhealth.hdmp.eshop.bean.entity.EshopConsumable;
+import com.offenhealth.hdmp.eshop.bean.vo.EshopConsumableVO;
 import  com.offenhealth.hdmp.eshop.business.base.IBaseService;
 import com.github.pagehelper.PageInfo;
 
@@ -11,6 +12,21 @@ import com.github.pagehelper.PageInfo;
  */
 public interface EshopConsumableService  extends IBaseService<EshopConsumable, String> {
 
+
+    /*
+    *@Author:johnson
+    *@Description:新增耗材
+    *@Date:18:56 2017/8/21
+    */
+    int insertConsumable(EshopConsumableVO eshopConsumableVO);
+
+
+    /*
+    *@Author:johnson
+    *@Description:查找特定耗材
+    *@Date:13:53 2017/8/22
+    */
+    public EshopConsumableVO queryConsumablesInfo(String id);
 
     /**
      * 分页

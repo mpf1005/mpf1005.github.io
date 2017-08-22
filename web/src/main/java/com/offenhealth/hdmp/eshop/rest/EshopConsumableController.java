@@ -1,5 +1,6 @@
 package com.offenhealth.hdmp.eshop.rest;
 
+import com.offenhealth.hdmp.eshop.bean.vo.EshopConsumableVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.*;
@@ -19,7 +20,7 @@ import com.offenhealth.hdmp.eshop.business.service.EshopConsumableService;
  * @date 2017-08-18 16:57:44
  */
 @RestController
-@RequestMapping("eshopconsumable")
+@RequestMapping("consumable")
 @Api( description="接口")
 public class EshopConsumableController {
 	@Autowired
@@ -39,46 +40,45 @@ public class EshopConsumableController {
     }
 
 
-    @RequestMapping(value="/save",method = RequestMethod.POST )
-    @ApiOperation(value = "保存",response = ResultResponse.class)
+    @RequestMapping(value="/create",method = RequestMethod.POST )
+    @ApiOperation(value = "新增耗材",response = ResultResponse.class)
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
-    public ResultResponse save( @RequestBody  EshopConsumable eshopConsumable){
-		eshopConsumableService.insert(eshopConsumable);
-        return ResultUtil.getSuccess();
-    }
-
-    @RequestMapping(value="/info",method = RequestMethod.GET )
-    @ApiOperation(value = "获取信息",response = EshopConsumable.class)
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", dataType="String", name = "id", value = "id" ),
-    })
-    @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
-    public ResultResponse info(String id ){
-		EshopConsumable eshopConsumable = eshopConsumableService.selectByPrimaryKey(id);
-        if (eshopConsumable == null ){
-            return ResultUtil.getError(ResultCode.DATA_NOT_EXIST.getCode());
-        }
-        return ResultUtil.getSuccess(eshopConsumable);
+    public ResultResponse save( @RequestBody EshopConsumableVO eshopConsumableVO){
+        eshopConsumableService.insertConsumable(eshopConsumableVO);
+        return ResultUtil.getSuccess("id",eshopConsumableVO.getId());
     }
 
 
-    @RequestMapping(value="/update",method = RequestMethod.POST)
-    @ApiOperation(value = "更新",response = ResultResponse.class)
+    @RequestMapping(value="/edit",method = RequestMethod.POST)
+    @ApiOperation(value = "耗材更新",response = ResultResponse.class)
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
     public ResultResponse update(EshopConsumable vo){
         if ( vo == null) {
             return ResultUtil.getError(ResultCode.PARAM_ERROR.getCode());
         }
-		EshopConsumable po = eshopConsumableService.selectByPrimaryKey(vo.getId());
+        EshopConsumable po = eshopConsumableService.selectByPrimaryKey(vo.getId());
         if ( po == null) {
             return ResultUtil.getError(ResultCode.PARAM_ERROR.getCode());
         }
         BeanUtils.copyProperties(vo,po, BeanUtils.getNullPropertyNames(vo));
         //更新
-	    eshopConsumableService.updateByPrimaryKey(po);
+        eshopConsumableService.updateByPrimaryKey(po);
         return ResultUtil.getSuccess();
     }
-	
+
+    @RequestMapping(value="/{id}",method = RequestMethod.GET )
+    @ApiOperation(value = "读取特定耗材",response = EshopConsumable.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType="String", name = "id", value = "id" ),
+    })
+    @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
+    public ResultResponse queryConsumablesInfo(String id){
+        EshopConsumableVO eshopConsumable = eshopConsumableService.queryConsumablesInfo(id);
+        if (eshopConsumable == null ){
+            return ResultUtil.getError(ResultCode.DATA_NOT_EXIST.getCode());
+        }
+        return ResultUtil.getSuccess(eshopConsumable);
+    }
 
 
     @RequestMapping(value="/deleteBatch",method = RequestMethod.POST)
