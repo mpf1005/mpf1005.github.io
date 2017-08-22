@@ -8,6 +8,7 @@ import com.offenhealth.hdmp.eshop.business.dao.EshopConsumableMapper;
 import com.offenhealth.hdmp.eshop.common.constants.ResultCode;
 import com.offenhealth.hdmp.eshop.common.exception.ServiceException;
 import com.offenhealth.hdmp.eshop.common.util.BeanUtils;
+import com.offenhealth.hdmp.eshop.common.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,9 +84,9 @@ public class EshopCongroupServiceImpl extends BaseService<EshopCongroup,String> 
         eshopCongroup.setCreateTime(new Date());
         eshopCongroup.setLastMTime(new Date());
         eshopCongroup.setCode("1");
-        eshopCongroup.setCreateUser("a");
+        eshopCongroup.setCreateUser(UserUtil.getuser());
         eshopCongroup.setStatus("1");
-        eshopCongroup.setLastMUser("b");
+        eshopCongroup.setLastMUser(UserUtil.getuser());
       return   eshopCongroupMapper.insert(eshopCongroup);
 
     }
@@ -121,7 +122,7 @@ public class EshopCongroupServiceImpl extends BaseService<EshopCongroup,String> 
             throw  new ServiceException(ResultCode.NAME_CANNOT_BE_EMPTY.getCode(),ResultCode.NAME_CANNOT_BE_EMPTY.getMsg());
         }
         eshopCongroup.setLastMTime(new Date());
-        eshopCongroup.setLastMUser("b");
+        eshopCongroup.setLastMUser(UserUtil.getuser());
         return eshopCongroupMapper.updateByPrimaryKey(eshopCongroup);
 
     }

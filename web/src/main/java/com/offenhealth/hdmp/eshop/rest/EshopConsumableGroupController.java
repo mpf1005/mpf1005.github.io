@@ -18,7 +18,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * 
- * 
+ * 耗材分组中间表
  * @author hhy
  * @date 2017-08-18 16:57:44
  */

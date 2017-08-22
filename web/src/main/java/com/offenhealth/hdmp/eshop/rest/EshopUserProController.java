@@ -18,7 +18,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * 
- * 
+ * 项目服务人员中间
  * @author hhy
  * @date 2017-08-18 16:57:44
  */

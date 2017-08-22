@@ -18,7 +18,7 @@ import com.offenhealth.hdmp.eshop.business.service.EshopGoodsService;
 
 /**
  * 
- * 
+ * 实物商品
  * @author hhy
  * @date 2017-08-21 15:36:33
  */
