@@ -19,7 +19,7 @@
 
 
     <select id="pageList" resultMap="eshopConsumableGroupMap">
-        SELECT * FROM ESHOP_CONSUMABLE_GROUP
+        SELECT * FROM eshop_consumable_group
         WHERE 1 = 1
         <if test="search != null and search.trim() != ''">
         </if>
@@ -27,7 +27,7 @@
 
 
 	<delete id="deleteBatch">
-		delete from ESHOP_CONSUMABLE_GROUP where ID in 
+		delete from eshop_consumable_group where ID in
 		<foreach item="id" collection="ids" open="(" separator="," close=")">
 			#{id}
 		</foreach>

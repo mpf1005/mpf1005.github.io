@@ -1,6 +1,8 @@
 package com.offenhealth.hdmp.eshop.business.dao;
 
 import com.offenhealth.hdmp.eshop.bean.entity.EshopCongroup;
+import com.offenhealth.hdmp.eshop.bean.vo.EshopCongroupCountVO;
+import com.offenhealth.hdmp.eshop.bean.vo.EshopCongroupVO;
 import com.offenhealth.hdmp.eshop.business.base.IBaseDao;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,5 +20,7 @@ public interface EshopCongroupMapper extends IBaseDao<EshopCongroup> {
     List<EshopCongroup> pageList(@Param("search") String search);
 
     void deleteBatch(@Param("ids") String [] ids);
+
+    List<EshopCongroupVO> getList();
 
 }

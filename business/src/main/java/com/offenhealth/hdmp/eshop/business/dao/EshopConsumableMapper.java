@@ -17,5 +17,9 @@ public interface EshopConsumableMapper extends IBaseDao<EshopConsumable> {
     List<EshopConsumable> pageList(@Param("search") String search);
 
     void deleteBatch(@Param("ids") String [] ids);
-
+    /**
+     * 获取耗材总数
+     * @return
+     */
+    public int countConsumableNum();
 }

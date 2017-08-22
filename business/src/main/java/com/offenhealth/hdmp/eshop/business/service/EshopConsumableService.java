@@ -26,6 +26,4 @@ public interface EshopConsumableService  extends IBaseService<EshopConsumable, S
      * @param ids   id数组
      */
     public void deleteBatch(String[] ids);
-
-
 }
