@@ -3,13 +3,14 @@ package com.offenhealth.hdmp.eshop.bean.entity;
 import java.util.Date;
 
 import com.alibaba.fastjson.JSONObject;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -26,8 +27,10 @@ public class Test   {
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private String id;
 		@ApiModelProperty(value  = "")
+		@NotNull
 		private String name;
-		@ApiModelProperty(value  = "")
+
+		@ApiModelProperty(dataType="string", value = "json" )
 		private JSONObject jon;
 	
 	/**

@@ -45,22 +45,6 @@ public class Application {
         }
         String contextPath = env.getProperty("server.context-path");
 
-        //拼接项目的访问路径，并打印出来
-        log.info("\n----------------------------------------------------------\n\t" +
-                        "Application '{}' is running! Access URLs:\n\t" +
-                        "Local: \t\t{}://localhost:{}\n\t" +
-                        "External: \t{}://{}:{}\n\t" +
-                        "接口文档地址: \t\t{}://localhost:{}\n\t" +
-                        "Profile(s): \t{}\n----------------------------------------------------------",
-                env.getProperty("spring.application.name"),
-                protocol,
-                env.getProperty("server.port")+contextPath,
-                protocol,
-                InetAddress.getLocalHost().getHostAddress(),
-                env.getProperty("server.port")+contextPath,
-                protocol,env.getProperty("server.port")+contextPath+"/swagger-ui.html",
-                env.getActiveProfiles());
-
         String[] beanNames =  ctx.getBeanDefinitionNames();
         System.out.println("所以beanNames个数："+beanNames.length);
         for(String bn:beanNames){
@@ -79,6 +63,23 @@ public class Application {
         for(String bn:repositoryBeanNames){
             System.out.println(bn);
         }
+
+
+        //拼接项目的访问路径，并打印出来
+        log.info("\n----------------------------------------------------------\n\t" +
+                        "Application '{}' is running! Access URLs:\n\t" +
+                        "Local: \t\t{}://localhost:{}\n\t" +
+                        "External: \t{}://{}:{}\n\t" +
+                        "接口文档地址: \t\t{}://localhost:{}\n\t" +
+                        "Profile(s): \t{}\n----------------------------------------------------------",
+                env.getProperty("spring.application.name"),
+                protocol,
+                env.getProperty("server.port")+contextPath,
+                protocol,
+                InetAddress.getLocalHost().getHostAddress(),
+                env.getProperty("server.port")+contextPath,
+                protocol,env.getProperty("server.port")+contextPath+"/swagger-ui.html",
+                env.getActiveProfiles());
     }
 
 

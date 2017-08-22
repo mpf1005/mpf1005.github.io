@@ -14,6 +14,7 @@ import com.offenhealth.hdmp.eshop.bean.entity.Test;
 import com.offenhealth.hdmp.eshop.business.service.TestService;
 
 import java.util.List;
+import javax.validation.Valid;
 
 
 /**
@@ -46,7 +47,7 @@ public class TestController {
     @RequestMapping(value="/save",method = RequestMethod.POST )
     @ApiOperation(value = "保存",response = ResultResponse.class)
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
-    public ResultResponse save(@RequestBody Test test){
+    public ResultResponse save(@Valid @RequestBody Test test){
 		testService.insert(test);
         return ResultUtil.getSuccess();
     }
