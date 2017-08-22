@@ -1,8 +1,9 @@
 package com.offenhealth.hdmp.eshop.business.service;
 
-import  com.offenhealth.hdmp.eshop.bean.entity.EshopProject;
-import  com.offenhealth.hdmp.eshop.business.base.IBaseService;
 import com.github.pagehelper.PageInfo;
+import com.offenhealth.hdmp.eshop.bean.entity.EshopProject;
+import com.offenhealth.hdmp.eshop.bean.vo.EshopProjectVO;
+import com.offenhealth.hdmp.eshop.business.base.IBaseService;
 
 /**
  * 
@@ -20,6 +21,12 @@ public interface EshopProjectService  extends IBaseService<EshopProject, String>
      * @return PageInfo 分页信息
      */
     public PageInfo<EshopProject> pageList(int pageNum, int pageSize, String search) ;
+
+    /**
+     * 新建项目
+     * EshopProjectVO eshopProjectVO
+     */
+    public int insert(EshopProjectVO eshopProjectVO);
 
     /**
      * 批量删除

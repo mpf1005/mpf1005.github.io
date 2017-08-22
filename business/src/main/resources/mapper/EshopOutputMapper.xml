@@ -6,7 +6,7 @@
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.offenhealth.hdmp.eshop.bean.entity.EshopOutput" id="eshopOutputMap">
         <result property="id" column="ID"/>
-        <result property="consumableId" column="CONSUMABLE_ID"/>
+        <result property="usedId" column="USED_ID"/>
         <result property="usedCount" column="USED_COUNT"/>
         <result property="description" column="DESCRIPTION"/>
         <result property="status" column="STATUS"/>
@@ -19,7 +19,7 @@
 
 
     <select id="pageList" resultMap="eshopOutputMap">
-        SELECT * FROM ESHOP_OUTPUT
+        SELECT * FROM eshop_output
         WHERE 1 = 1
         <if test="search != null and search.trim() != ''">
         </if>
@@ -27,7 +27,7 @@
 
 
 	<delete id="deleteBatch">
-		delete from ESHOP_OUTPUT where ID in 
+		delete from eshop_output where ID in
 		<foreach item="id" collection="ids" open="(" separator="," close=")">
 			#{id}
 		</foreach>
