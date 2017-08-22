@@ -13,14 +13,16 @@ import com.offenhealth.hdmp.eshop.common.util.BeanUtils;
 import com.offenhealth.hdmp.eshop.common.util.ResultUtil;
 import com.offenhealth.hdmp.eshop.bean.entity.EshopGoodsShelves;
 import com.offenhealth.hdmp.eshop.business.service.EshopGoodsShelvesService;
+import springfox.documentation.annotations.ApiIgnore;
 
 
 /**
  * 
- * 
+ * 商品货架中间表
  * @author hhy
  * @date 2017-08-21 15:36:33
  */
+@ApiIgnore
 @RestController
 @RequestMapping("eshopgoodsshelves")
 @Api( description="接口")

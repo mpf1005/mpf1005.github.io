@@ -16,7 +16,12 @@
         <result property="lastMTime" column="LAST_M_TIME"/>
         <result property="version" column="VERSION"/>
     </resultMap>
-    <!--读取项目分组的列表(含分页，模糊查询)-->
+    <!--项目的总数量-->
+    <select id="getcount" resultType="int">
+        select count(*) aa from eshop_project
+    </select>
+
+    <!--读取项目分组的列表-->
     <select id="pageList" resultMap="eshopProgroupMap">
         SELECT * FROM eshop_progroup
         WHERE 1 = 1

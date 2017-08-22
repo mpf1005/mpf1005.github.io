@@ -14,19 +14,21 @@ import java.util.Date;
  * 
  * 
  * @author hhy
- * @date 2017-08-18 16:57:44
+ * @date 2017-08-22 13:46:21
  */
-@ApiModel(value = "EshopOutput",description = "" )
-public class EshopOutput   {
+@ApiModel(value = "EshopConPro",description = "" )
+public class EshopConPro   {
 
 	@ApiModelProperty(value  = "")
 			@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private String id;
 		@ApiModelProperty(value  = "")
-		private String usedId;
+		private String projectId;
 		@ApiModelProperty(value  = "")
-		private Integer usedCount;
+		private Integer consumableNum;
+		@ApiModelProperty(value  = "")
+		private String consumableId;
 		@ApiModelProperty(value  = "")
 		private String description;
 		@ApiModelProperty(value  = "")
@@ -54,27 +56,41 @@ public class EshopOutput   {
 	public String getId() {
 		return id;
 	}
-
-	public String getUsedId() {
-		return usedId;
-	}
-
-	public void setUsedId(String usedId) {
-		this.usedId = usedId;
-	}
-
 	/**
 	 * 设置：
 	 */
-
-	public void setUsedCount(Integer usedCount) {
-		this.usedCount = usedCount;
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
 	}
 	/**
 	 * 获取：
 	 */
-	public Integer getUsedCount() {
-		return usedCount;
+	public String getProjectId() {
+		return projectId;
+	}
+	/**
+	 * 设置：
+	 */
+	public void setConsumableNum(Integer consumableNum) {
+		this.consumableNum = consumableNum;
+	}
+	/**
+	 * 获取：
+	 */
+	public Integer getConsumableNum() {
+		return consumableNum;
+	}
+	/**
+	 * 设置：
+	 */
+	public void setConsumableId(String consumableId) {
+		this.consumableId = consumableId;
+	}
+	/**
+	 * 获取：
+	 */
+	public String getConsumableId() {
+		return consumableId;
 	}
 	/**
 	 * 设置：

@@ -1,11 +1,14 @@
 package com.offenhealth.hdmp.eshop.business.service.impl;
 
 
+import com.offenhealth.hdmp.eshop.bean.vo.EshopCongroupCountVO;
 import com.offenhealth.hdmp.eshop.bean.vo.EshopCongroupVO;
 import com.offenhealth.hdmp.eshop.business.dao.EshopConsumableGroupMapper;
+import com.offenhealth.hdmp.eshop.business.dao.EshopConsumableMapper;
 import com.offenhealth.hdmp.eshop.common.constants.ResultCode;
 import com.offenhealth.hdmp.eshop.common.exception.ServiceException;
 import com.offenhealth.hdmp.eshop.common.util.BeanUtils;
+import com.offenhealth.hdmp.eshop.common.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +40,8 @@ public class EshopCongroupServiceImpl extends BaseService<EshopCongroup,String> 
 	private EshopCongroupMapper eshopCongroupMapper;
     @Autowired
     private EshopConsumableGroupMapper eshopConsumableGroupMapper;
-
+    @Autowired
+    private EshopConsumableMapper eshopConsumableMapper;
     @Override
     protected IBaseDao <EshopCongroup> getBaseDao() {
         return eshopCongroupMapper;
@@ -80,9 +84,9 @@ public class EshopCongroupServiceImpl extends BaseService<EshopCongroup,String> 
         eshopCongroup.setCreateTime(new Date());
         eshopCongroup.setLastMTime(new Date());
         eshopCongroup.setCode("1");
-        eshopCongroup.setCreateUser("a");
+        eshopCongroup.setCreateUser(UserUtil.getuser());
         eshopCongroup.setStatus("1");
-        eshopCongroup.setLastMUser("b");
+        eshopCongroup.setLastMUser(UserUtil.getuser());
       return   eshopCongroupMapper.insert(eshopCongroup);
 
     }
@@ -114,10 +118,44 @@ public class EshopCongroupServiceImpl extends BaseService<EshopCongroup,String> 
      */
     @Override
     public  int updateByPrimaryKey(EshopCongroup eshopCongroup){
+        if (eshopCongroup.getName()==null){
+            throw  new ServiceException(ResultCode.NAME_CANNOT_BE_EMPTY.getCode(),ResultCode.NAME_CANNOT_BE_EMPTY.getMsg());
+        }
         eshopCongroup.setLastMTime(new Date());
-        eshopCongroup.setLastMUser("b");
+        eshopCongroup.setLastMUser(UserUtil.getuser());
         return eshopCongroupMapper.updateByPrimaryKey(eshopCongroup);
 
-    };
+    }
+
+    /**
+     * 删除指定分组
+     * @param id 主键
+     * @return
+     */
+    @Override
+    public  int  deleteByPrimaryKey(String id){
+        EshopCongroup eshopCongroup = eshopCongroupMapper.selectByPrimaryKey(id);
+        if (eshopCongroup==null){
+            throw  new ServiceException( ResultCode.NO_GROUP_BY_ID.getCode(),ResultCode.NO_GROUP_BY_ID.getMsg());
+        }
+        return eshopCongroupMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public EshopCongroupCountVO getlist() {
+        EshopCongroupCountVO eshopCongroupCountVO = new EshopCongroupCountVO();
+        //获取耗材所有分组
+        List<EshopCongroupVO> eshopCongroups = eshopCongroupMapper.getList();
+        //获取耗材总数
+        int countConsumableNun = eshopConsumableMapper.countConsumableNum();
+        //循环遍历将每一个分组的耗材数量set进去
+        for (EshopCongroupVO eshopCongroupVO: eshopCongroups) {
+            int countByGroupID = eshopConsumableGroupMapper.getCountByGroupID(eshopCongroupVO.getId());
+            eshopCongroupVO.setConsumableNumber(countByGroupID);
+        }
+        eshopCongroupCountVO.setCount(countConsumableNun);
+        eshopCongroupCountVO.setEshopCongroupList(eshopCongroups);
+        return eshopCongroupCountVO;
+    }
 }
 

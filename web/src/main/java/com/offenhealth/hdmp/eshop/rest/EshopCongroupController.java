@@ -11,6 +11,7 @@ import com.offenhealth.hdmp.eshop.common.util.BeanUtils;
 import com.offenhealth.hdmp.eshop.common.util.ResultUtil;
 import com.offenhealth.hdmp.eshop.bean.entity.EshopCongroup;
 import com.offenhealth.hdmp.eshop.business.service.EshopCongroupService;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.persistence.Id;
 
@@ -28,17 +29,12 @@ public class EshopCongroupController {
 	@Autowired
 	private EshopCongroupService eshopCongroupService;
 
-    @RequestMapping(value="/list",method = RequestMethod.POST )
-    @ApiOperation(value = "分页列表",response = EshopCongroup.class)
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", dataType="int", name = "pageNum", value = "页码，为空时默认1" ),
-            @ApiImplicitParam(paramType = "query", dataType="int", name = "pageSize", value = "页数,为空时默认20" ),
-            @ApiImplicitParam(paramType = "query", dataType="string", name = "search", value = "搜索字符" )
-    })
+    @RequestMapping(value="/list",method = RequestMethod.GET )
+    @ApiOperation(value = "耗材分组列表",response = EshopCongroup.class)
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
-    public ResultResponse pageList(@RequestParam(defaultValue = "1") Integer pageNum,
-                                   @RequestParam(defaultValue = "20")Integer pageSize, String search)  {
-        return ResultUtil.getSuccess(eshopCongroupService.pageList(pageNum,pageSize,search));
+    public ResultResponse pageList()  {
+
+        return ResultUtil.getSuccess(eshopCongroupService.getlist());
     }
 
 
@@ -76,9 +72,9 @@ public class EshopCongroupController {
 	    eshopCongroupService.updateByPrimaryKey(vo);
         return ResultUtil.getSuccess();
     }
-	
 
 
+    @ApiIgnore
     @RequestMapping(value="/deleteBatch",method = RequestMethod.POST)
     @ApiOperation(value = "批量删除",response = ResultResponse.class)
     @ApiImplicitParams({
@@ -93,7 +89,7 @@ public class EshopCongroupController {
         return ResultUtil.getSuccess();
     }
     @RequestMapping(value="/{id}/delete",method = RequestMethod.POST)
-    @ApiOperation(value = "删除",response = ResultResponse.class)
+    @ApiOperation(value = "删除单个分组",response = ResultResponse.class)
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
     public ResultResponse deleteBatch( @PathVariable String id){
         if (id==null){

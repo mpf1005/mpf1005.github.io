@@ -17,7 +17,7 @@ import com.offenhealth.hdmp.eshop.business.service.EshopGoodsgroupService;
 
 /**
  * 
- * 
+ * 商品分组中间表
  * @author hhy
  * @date 2017-08-21 15:36:32
  */

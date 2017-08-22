@@ -1,6 +1,7 @@
 package com.offenhealth.hdmp.eshop.business.service;
 
 import  com.offenhealth.hdmp.eshop.bean.entity.EshopCongroup;
+import com.offenhealth.hdmp.eshop.bean.vo.EshopCongroupCountVO;
 import com.offenhealth.hdmp.eshop.bean.vo.EshopCongroupVO;
 import  com.offenhealth.hdmp.eshop.business.base.IBaseService;
 import com.github.pagehelper.PageInfo;
@@ -34,4 +35,8 @@ public interface EshopCongroupService  extends IBaseService<EshopCongroup, Strin
     public EshopCongroupVO selectByPrimaryKey(String id);
 
     public  int  updateByPrimaryKey(EshopCongroup vo);
+
+    public int deleteByPrimaryKey(String id);
+
+    public EshopCongroupCountVO getlist();
 }

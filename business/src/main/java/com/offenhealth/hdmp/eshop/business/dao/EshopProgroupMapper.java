@@ -15,6 +15,9 @@ import java.util.List;
  * @date 2017-08-18 16:57:44
  */
 public interface EshopProgroupMapper extends IBaseDao<EshopProgroup> {
+    //项目的总数量
+    int getcount();
+
     //读取项目分组的列表(含分页，模糊查询)
     List<EshopProgroupVO> pageList(@Param("search") String search);
 

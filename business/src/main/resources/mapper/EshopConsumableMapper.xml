@@ -21,15 +21,19 @@
 
 
     <select id="pageList" resultMap="eshopConsumableMap">
-        SELECT * FROM ESHOP_CONSUMABLE
+        SELECT * FROM eshop_consumable
         WHERE 1 = 1
         <if test="search != null and search.trim() != ''">
         </if>
     </select>
 
+    <select id="countConsumableNum" resultType="java.lang.Integer">
+        SELECT COUNT(id) FROM eshop_consumable
+    </select>
 
-	<delete id="deleteBatch">
-		delete from ESHOP_CONSUMABLE where ID in 
+
+    <delete id="deleteBatch">
+		delete from eshop_consumable where ID in
 		<foreach item="id" collection="ids" open="(" separator="," close=")">
 			#{id}
 		</foreach>
