@@ -16,7 +16,7 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface EshopConsumableMapper extends IBaseDao<EshopConsumable> {
 
-    List<EshopConsumable> pageList(@Param("search") String search);
+    List<EshopConsumableVO> pageList(@Param("search") String search);
 
     void deleteBatch(@Param("ids") String [] ids);
 

@@ -15,6 +15,14 @@ public class EshopConsumableVO extends EshopConsumable {
     private String[] groupIdList;
     @Transient
     private List<EshopCongroup> eshopCongroup;
+    //已用数量
+    private  Integer usedCount;
+
+    public Integer getUsedCount() {
+        return usedCount;
+    }
+
+    public void setUsedCount(Integer usedCount) {this.usedCount = usedCount;}
 
     public List<EshopCongroup> getEshopCongroup() {
         return eshopCongroup;

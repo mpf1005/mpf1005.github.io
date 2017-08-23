@@ -6,12 +6,14 @@ import com.github.pagehelper.PageInfo;
 import com.offenhealth.hdmp.eshop.bean.entity.EshopConPro;
 import com.offenhealth.hdmp.eshop.bean.entity.EshopConsumable;
 import com.offenhealth.hdmp.eshop.bean.entity.EshopConsumableGroup;
+import com.offenhealth.hdmp.eshop.bean.entity.EshopOutput;
 import com.offenhealth.hdmp.eshop.bean.vo.EshopConsumableVO;
 import com.offenhealth.hdmp.eshop.business.base.BaseService;
 import com.offenhealth.hdmp.eshop.business.base.IBaseDao;
 import com.offenhealth.hdmp.eshop.business.dao.EshopConProMapper;
 import com.offenhealth.hdmp.eshop.business.dao.EshopConsumableGroupMapper;
 import com.offenhealth.hdmp.eshop.business.dao.EshopConsumableMapper;
+import com.offenhealth.hdmp.eshop.business.dao.EshopOutputMapper;
 import com.offenhealth.hdmp.eshop.business.service.EshopConsumableService;
 import com.offenhealth.hdmp.eshop.common.constants.ResultCode;
 import com.offenhealth.hdmp.eshop.common.exception.ServiceException;
@@ -41,7 +43,8 @@ public class EshopConsumableServiceImpl extends BaseService<EshopConsumable,Stri
     private EshopConsumableGroupMapper eshopConsumableGroupMapper;
     @Autowired
     private EshopConProMapper eshopConProMapper;
-
+    @Autowired
+    private EshopOutputMapper eshopOutputMapper;
     @Override
     protected IBaseDao <EshopConsumable> getBaseDao() {
         return eshopConsumableMapper;
@@ -107,18 +110,22 @@ public class EshopConsumableServiceImpl extends BaseService<EshopConsumable,Stri
     }
 
 
-    /**
-     * 分页
-     * @param pageNum   页码
-     * @param pageSize  页数
-     * @param search  搜索内容
-     * @return PageInfo 分页信息
-     */
     @Override
-    public PageInfo<EshopConsumable> pageList(int pageNum, int pageSize, String search) {
+    public PageInfo<EshopConsumableVO> pageList(int pageNum, int pageSize, String search) {
         PageHelper.startPage(pageNum, pageSize);
-        List<EshopConsumable> list = eshopConsumableMapper.pageList(search);
-        PageInfo <EshopConsumable> pageInfo = new PageInfo <>(list);
+        List<EshopConsumableVO> list = eshopConsumableMapper.pageList(search);//查出所有的耗材
+        //遍历耗材列表 将查到的已用信息设置进去
+        for (EshopConsumableVO eshopConsumableVO:list) {
+            //根据耗材Id去出库表中查询记录
+            EshopOutput eshopOutput = eshopOutputMapper.selectUsedCountByConId(eshopConsumableVO.getId());
+            //如果出库表没有这个记录 将已用数量设置成0返回
+            if (eshopOutput==null){
+                eshopConsumableVO.setUsedCount(0);
+            }else {
+                eshopConsumableVO.setUsedCount(eshopOutput.getUsedCount());
+            }
+        }
+        PageInfo <EshopConsumableVO> pageInfo = new PageInfo <>(list);
         return pageInfo;
     }
 
