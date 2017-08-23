@@ -4,7 +4,7 @@
 <mapper namespace="com.offenhealth.hdmp.eshop.business.dao.EshopConsumableMapper">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.offenhealth.hdmp.eshop.bean.entity.EshopConsumable" id="eshopConsumableMap">
+    <resultMap type="com.offenhealth.hdmp.eshop.bean.vo.EshopConsumableVO" id="eshopConsumableMap">
         <result property="id" column="ID"/>
         <result property="code" column="CODE"/>
         <result property="name" column="NAME"/>
@@ -46,6 +46,7 @@
         SELECT * FROM eshop_consumable
         WHERE 1 = 1
         <if test="search != null and search.trim() != ''">
+            AND NAME LIKE concat('%',#{search},'%')
         </if>
     </select>
 

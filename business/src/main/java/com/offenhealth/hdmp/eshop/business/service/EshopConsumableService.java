@@ -40,7 +40,7 @@ public interface EshopConsumableService  extends IBaseService<EshopConsumable, S
      * @param search  搜索内容
      * @return PageInfo 分页信息
      */
-    public PageInfo<EshopConsumable> pageList(int pageNum, int pageSize, String search) ;
+    public PageInfo<EshopConsumableVO> pageList(int pageNum, int pageSize, String search) ;
 
     /**
      * 批量删除

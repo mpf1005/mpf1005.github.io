@@ -1,37 +1,34 @@
 package com.offenhealth.hdmp.eshop.rest;
 
-import com.offenhealth.hdmp.eshop.bean.entity.EshopConsumableGroup;
-import com.offenhealth.hdmp.eshop.business.service.EshopConsumableGroupService;
+import com.offenhealth.hdmp.eshop.bean.vo.EshopConsumableVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import io.swagger.annotations.*;
+import org.apache.commons.lang3.ArrayUtils;
 import com.offenhealth.hdmp.eshop.common.constants.ResultCode;
 import com.offenhealth.hdmp.eshop.common.constants.ResultResponse;
 import com.offenhealth.hdmp.eshop.common.util.BeanUtils;
 import com.offenhealth.hdmp.eshop.common.util.ResultUtil;
-import io.swagger.annotations.*;
-import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.offenhealth.hdmp.eshop.bean.entity.EshopConsumable;
+import com.offenhealth.hdmp.eshop.business.service.EshopConsumableService;
 import springfox.documentation.annotations.ApiIgnore;
 
 
 /**
  * 
- * 耗材分组中间表
+ *耗材
  * @author hhy
  * @date 2017-08-18 16:57:44
  */
-@ApiIgnore
 @RestController
-@RequestMapping("eshopconsumablegroup")
-@Api( description="接口")
-public class EshopConsumableGroupController {
+@RequestMapping("consumables")
+@Api( description="耗材管理接口")
+public class EshopConsumableController {
 	@Autowired
-	private EshopConsumableGroupService eshopConsumableGroupService;
+	private EshopConsumableService eshopConsumableService;
 
     @RequestMapping(value="/list",method = RequestMethod.POST )
-    @ApiOperation(value = "分页列表",response = EshopConsumableGroup.class)
+    @ApiOperation(value = "分页耗材列表",response = EshopConsumable.class)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", dataType="int", name = "pageNum", value = "页码，为空时默认1" ),
             @ApiImplicitParam(paramType = "query", dataType="int", name = "pageSize", value = "页数,为空时默认20" ),
@@ -40,52 +37,51 @@ public class EshopConsumableGroupController {
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
     public ResultResponse pageList(@RequestParam(defaultValue = "1") Integer pageNum,
                                    @RequestParam(defaultValue = "20")Integer pageSize, String search)  {
-        return ResultUtil.getSuccess(eshopConsumableGroupService.pageList(pageNum,pageSize,search));
+        return ResultUtil.getSuccess(eshopConsumableService.pageList(pageNum,pageSize,search));
     }
 
 
-    @RequestMapping(value="/save",method = RequestMethod.POST )
-    @ApiOperation(value = "保存",response = ResultResponse.class)
+    @RequestMapping(value="/create",method = RequestMethod.POST )
+    @ApiOperation(value = "新增耗材",response = ResultResponse.class)
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
-    public ResultResponse save(EshopConsumableGroup eshopConsumableGroup){
-		eshopConsumableGroupService.insert(eshopConsumableGroup);
-        return ResultUtil.getSuccess();
-    }
-
-    @RequestMapping(value="/info",method = RequestMethod.GET )
-    @ApiOperation(value = "获取信息",response = EshopConsumableGroup.class)
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", dataType="String", name = "id", value = "id" ),
-    })
-    @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
-    public ResultResponse info(String id ){
-		EshopConsumableGroup eshopConsumableGroup = eshopConsumableGroupService.selectByPrimaryKey(id);
-        if (eshopConsumableGroup == null ){
-            return ResultUtil.getError(ResultCode.DATA_NOT_EXIST.getCode());
-        }
-        return ResultUtil.getSuccess(eshopConsumableGroup);
+    public ResultResponse save( @RequestBody EshopConsumableVO eshopConsumableVO){
+        eshopConsumableService.insertConsumable(eshopConsumableVO);
+        return ResultUtil.getSuccess("id",eshopConsumableVO.getId());
     }
 
 
-    @RequestMapping(value="/update",method = RequestMethod.POST)
-    @ApiOperation(value = "更新",response = ResultResponse.class)
+    @RequestMapping(value="/edit",method = RequestMethod.POST)
+    @ApiOperation(value = "耗材更新",response = ResultResponse.class)
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
-    public ResultResponse update(EshopConsumableGroup vo){
+    public ResultResponse update(EshopConsumable vo){
         if ( vo == null) {
             return ResultUtil.getError(ResultCode.PARAM_ERROR.getCode());
         }
-		EshopConsumableGroup po = eshopConsumableGroupService.selectByPrimaryKey(vo.getId());
+        EshopConsumable po = eshopConsumableService.selectByPrimaryKey(vo.getId());
         if ( po == null) {
             return ResultUtil.getError(ResultCode.PARAM_ERROR.getCode());
         }
         BeanUtils.copyProperties(vo,po, BeanUtils.getNullPropertyNames(vo));
         //更新
-	    eshopConsumableGroupService.updateByPrimaryKey(po);
+        eshopConsumableService.updateByPrimaryKey(po);
         return ResultUtil.getSuccess();
     }
-	
 
+    @RequestMapping(value="/{id}",method = RequestMethod.GET )
+    @ApiOperation(value = "读取特定耗材",response = EshopConsumable.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType="String", name = "id", value = "id" ),
+    })
+    @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
+    public ResultResponse queryConsumablesInfo(String id){
+        EshopConsumableVO eshopConsumable = eshopConsumableService.queryConsumablesInfo(id);
+        if (eshopConsumable == null ){
+            return ResultUtil.getError(ResultCode.DATA_NOT_EXIST.getCode());
+        }
+        return ResultUtil.getSuccess(eshopConsumable);
+    }
 
+    @ApiIgnore
     @RequestMapping(value="/deleteBatch",method = RequestMethod.POST)
     @ApiOperation(value = "批量删除",response = ResultResponse.class)
     @ApiImplicitParams({
@@ -96,7 +92,18 @@ public class EshopConsumableGroupController {
         if (ArrayUtils.isEmpty(ids)) {
             return ResultUtil.getError(ResultCode.PARAM_ERROR.getCode());
         }
-		eshopConsumableGroupService.deleteBatch(ids);
+		eshopConsumableService.deleteBatch(ids);
+        return ResultUtil.getSuccess();
+    }
+    @RequestMapping(value="/{id}/delete",method = RequestMethod.POST)
+    @ApiOperation(value = "删除单个耗材",response = ResultResponse.class)
+
+    @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
+    public ResultResponse deleteConsumable( @PathVariable String  id){
+        if (id==null) {
+            return ResultUtil.getError(ResultCode.PARAM_ERROR.getCode());
+        }
+        eshopConsumableService.deleteConsumable(id);
         return ResultUtil.getSuccess();
     }
 
