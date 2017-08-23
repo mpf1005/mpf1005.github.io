@@ -21,7 +21,7 @@ import com.offenhealth.hdmp.eshop.business.service.EshopConsumableService;
  */
 @RestController
 @RequestMapping("consumable")
-@Api( description="接口")
+@Api( description="耗材接口")
 public class EshopConsumableController {
 	@Autowired
 	private EshopConsumableService eshopConsumableService;
@@ -52,17 +52,11 @@ public class EshopConsumableController {
     @RequestMapping(value="/edit",method = RequestMethod.POST)
     @ApiOperation(value = "耗材更新",response = ResultResponse.class)
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
-    public ResultResponse update(EshopConsumable vo){
-        if ( vo == null) {
+    public ResultResponse update(@RequestBody EshopConsumableVO eshopConsumableVO){
+        if (eshopConsumableVO == null) {
             return ResultUtil.getError(ResultCode.PARAM_ERROR.getCode());
         }
-        EshopConsumable po = eshopConsumableService.selectByPrimaryKey(vo.getId());
-        if ( po == null) {
-            return ResultUtil.getError(ResultCode.PARAM_ERROR.getCode());
-        }
-        BeanUtils.copyProperties(vo,po, BeanUtils.getNullPropertyNames(vo));
-        //更新
-        eshopConsumableService.updateByPrimaryKey(po);
+        eshopConsumableService.updateConsumable(eshopConsumableVO);
         return ResultUtil.getSuccess();
     }
 

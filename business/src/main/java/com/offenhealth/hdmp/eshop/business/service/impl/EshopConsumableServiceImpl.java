@@ -4,12 +4,14 @@ package com.offenhealth.hdmp.eshop.business.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.offenhealth.hdmp.eshop.bean.entity.EshopConPro;
+import com.offenhealth.hdmp.eshop.bean.entity.EshopCongroup;
 import com.offenhealth.hdmp.eshop.bean.entity.EshopConsumable;
 import com.offenhealth.hdmp.eshop.bean.entity.EshopConsumableGroup;
 import com.offenhealth.hdmp.eshop.bean.vo.EshopConsumableVO;
 import com.offenhealth.hdmp.eshop.business.base.BaseService;
 import com.offenhealth.hdmp.eshop.business.base.IBaseDao;
 import com.offenhealth.hdmp.eshop.business.dao.EshopConProMapper;
+import com.offenhealth.hdmp.eshop.business.dao.EshopCongroupMapper;
 import com.offenhealth.hdmp.eshop.business.dao.EshopConsumableGroupMapper;
 import com.offenhealth.hdmp.eshop.business.dao.EshopConsumableMapper;
 import com.offenhealth.hdmp.eshop.business.service.EshopConsumableService;
@@ -91,8 +93,33 @@ public class EshopConsumableServiceImpl extends BaseService<EshopConsumable,Stri
   *@Description:更新耗材
   *@Date:10:06 2017/8/22
   */
-    public int updateConsumable(EshopConsumable eshopConsumable){
-        int i = eshopConsumableMapper.updateByPrimaryKey(eshopConsumable);
+
+    public int updateConsumable(EshopConsumableVO eshopConsumableVO){
+        int i=0;
+        EshopConsumableGroup eshopConsumableGroup=null;
+        if (eshopConsumableVO!=null){
+        i = eshopConsumableMapper.updateByPrimaryKey(eshopConsumableVO);
+            if (eshopConsumableVO.getGroupIdList()!=null) {
+                String[] consumableGroupIds = eshopConsumableVO.getGroupIdList();
+                List<EshopConsumableGroup> eshopConsumableGroups = eshopConsumableGroupMapper.selectConsGroupByConId(eshopConsumableVO.getId());//根据id查询耗材分组列表
+                if (eshopConsumableGroups!=null) {
+                    for (EshopConsumableGroup eshopConsGroup : eshopConsumableGroups) {
+                        eshopConsumableGroupMapper.delete(eshopConsGroup);
+                    }
+                    for (String id : consumableGroupIds) {
+                        eshopConsumableGroup = new EshopConsumableGroup();
+                        eshopConsumableGroup.setStatus("1");
+                        eshopConsumableGroup.setCreateTime(new Date());
+                        eshopConsumableGroup.setCreateUser(UserUtil.getuser());
+                        eshopConsumableGroup.setLastMTime(new Date());
+                        eshopConsumableGroup.setLastMUser(UserUtil.getuser());
+                        eshopConsumableGroup.setConId(eshopConsumableVO.getId());
+                        eshopConsumableGroup.setGroupId(id);
+                        eshopConsumableGroupMapper.insert(eshopConsumableGroup);
+                    }
+                }
+            }
+        }
         return i;
     }
 

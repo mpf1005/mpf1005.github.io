@@ -20,7 +20,12 @@ public interface EshopConsumableService  extends IBaseService<EshopConsumable, S
     */
     int insertConsumable(EshopConsumableVO eshopConsumableVO);
 
-
+    /*
+    *@Author:johnson
+    *@Description:更改耗材
+    *@Date:16:16 2017/8/23
+    */
+    public int updateConsumable(EshopConsumableVO eshopConsumableVO);
     /*
     *@Author:johnson
     *@Description:查找特定耗材

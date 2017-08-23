@@ -38,4 +38,10 @@
     SELECT COUNT(id) FROM eshop_consumable_group WHERE GROUP_ID=#{id}
 
     </select>
+
+
+    <!--查询耗材分组列表-->
+    <select id="selectConsGroupByConId" resultMap="eshopConsumableGroupMap">
+      select ecg.ID,ecg.CON_ID,ecg.GROUP_ID from eshop_consumable_group ecg where ecg.CON_ID=#{id}
+    </select>
 </mapper>
