@@ -63,7 +63,7 @@ public class EshopConsumableServiceImpl extends BaseService<EshopConsumable,Stri
             eshopConsumableVO.setLastMTime(new Date());
             eshopConsumableVO.setLastMUser(UserUtil.getuser());
             insert = eshopConsumableMapper.insert(eshopConsumableVO);
-            if (eshopConsumableVO.getGroupIdList().length!= -1){
+            if (eshopConsumableVO.getGroupIdList()!=null){
                 String[] consumableGroupIds = eshopConsumableVO.getGroupIdList();
                 for (String id:consumableGroupIds) {
                     EshopConsumableGroup eshopConsumableGroup = new EshopConsumableGroup();
