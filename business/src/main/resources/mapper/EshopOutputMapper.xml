@@ -32,5 +32,9 @@
 			#{id}
 		</foreach>
 	</delete>
+    <select id="selectUsedCountByConId" parameterType="String"  resultMap="eshopOutputMap">
+        SELECT * FROM eshop_output WHERE USED_ID = #{id}
+
+    </select>
 
 </mapper>

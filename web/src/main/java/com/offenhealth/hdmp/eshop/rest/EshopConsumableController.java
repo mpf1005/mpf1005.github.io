@@ -11,6 +11,7 @@ import com.offenhealth.hdmp.eshop.common.util.BeanUtils;
 import com.offenhealth.hdmp.eshop.common.util.ResultUtil;
 import com.offenhealth.hdmp.eshop.bean.entity.EshopConsumable;
 import com.offenhealth.hdmp.eshop.business.service.EshopConsumableService;
+import springfox.documentation.annotations.ApiIgnore;
 
 
 /**
@@ -20,14 +21,14 @@ import com.offenhealth.hdmp.eshop.business.service.EshopConsumableService;
  * @date 2017-08-18 16:57:44
  */
 @RestController
-@RequestMapping("consumable")
-@Api( description="接口")
+@RequestMapping("consumables")
+@Api( description="耗材管理接口")
 public class EshopConsumableController {
 	@Autowired
 	private EshopConsumableService eshopConsumableService;
 
     @RequestMapping(value="/list",method = RequestMethod.POST )
-    @ApiOperation(value = "分页列表",response = EshopConsumable.class)
+    @ApiOperation(value = "分页耗材列表",response = EshopConsumable.class)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", dataType="int", name = "pageNum", value = "页码，为空时默认1" ),
             @ApiImplicitParam(paramType = "query", dataType="int", name = "pageSize", value = "页数,为空时默认20" ),
@@ -80,7 +81,7 @@ public class EshopConsumableController {
         return ResultUtil.getSuccess(eshopConsumable);
     }
 
-
+    @ApiIgnore
     @RequestMapping(value="/deleteBatch",method = RequestMethod.POST)
     @ApiOperation(value = "批量删除",response = ResultResponse.class)
     @ApiImplicitParams({

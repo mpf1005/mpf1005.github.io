@@ -18,4 +18,6 @@ public interface EshopOutputMapper extends IBaseDao<EshopOutput> {
 
     void deleteBatch(@Param("ids") String [] ids);
 
+    EshopOutput selectUsedCountByConId(String id);
+
 }
