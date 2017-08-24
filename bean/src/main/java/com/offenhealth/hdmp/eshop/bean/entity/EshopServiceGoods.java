@@ -14,19 +14,19 @@ import javax.persistence.Id;
  * 
  * 
  * @author hhy
- * @date 2017-08-21 15:36:33
+ * @date 2017-08-24 13:44:59
  */
-@ApiModel(value = "EshopGoodsShelf",description = "" )
-public class EshopGoodsShelf   {
+@ApiModel(value = "EshopServiceGoods",description = "" )
+public class EshopServiceGoods   {
 
 	@ApiModelProperty(value  = "")
 			@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private String id;
 		@ApiModelProperty(value  = "")
-		private String code;
+		private String serviceId;
 		@ApiModelProperty(value  = "")
-		private String goodsShelvesName;
+		private String goodsId;
 		@ApiModelProperty(value  = "")
 		private String description;
 		@ApiModelProperty(value  = "")
@@ -57,26 +57,26 @@ public class EshopGoodsShelf   {
 	/**
 	 * 设置：
 	 */
-	public void setCode(String code) {
-		this.code = code;
+	public void setServiceId(String serviceId) {
+		this.serviceId = serviceId;
 	}
 	/**
 	 * 获取：
 	 */
-	public String getCode() {
-		return code;
+	public String getServiceId() {
+		return serviceId;
 	}
 	/**
 	 * 设置：
 	 */
-	public void setGoodsShelvesName(String goodsShelvesName) {
-		this.goodsShelvesName = goodsShelvesName;
+	public void setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
 	}
 	/**
 	 * 获取：
 	 */
-	public String getGoodsShelvesName() {
-		return goodsShelvesName;
+	public String getGoodsId() {
+		return goodsId;
 	}
 	/**
 	 * 设置：

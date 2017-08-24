@@ -11,27 +11,25 @@ import com.offenhealth.hdmp.eshop.common.constants.ResultCode;
 import com.offenhealth.hdmp.eshop.common.constants.ResultResponse;
 import com.offenhealth.hdmp.eshop.common.util.BeanUtils;
 import com.offenhealth.hdmp.eshop.common.util.ResultUtil;
-import com.offenhealth.hdmp.eshop.bean.entity.EshopGoodsShelves;
-import com.offenhealth.hdmp.eshop.business.service.EshopGoodsShelvesService;
-import springfox.documentation.annotations.ApiIgnore;
+import com.offenhealth.hdmp.eshop.bean.entity.EshopServiceGoods;
+import com.offenhealth.hdmp.eshop.business.service.EshopServiceGoodsService;
 
 
 /**
  * 
- * 商品货架中间表
+ * 
  * @author hhy
- * @date 2017-08-21 15:36:33
+ * @date 2017-08-24 13:44:59
  */
-@ApiIgnore
 @RestController
-@RequestMapping("eshopgoodsshelves")
+@RequestMapping("eshopservicegoods")
 @Api( description="接口")
-public class EshopGoodsShelvesController {
+public class EshopServiceGoodsController {
 	@Autowired
-	private EshopGoodsShelvesService eshopGoodsShelvesService;
+	private EshopServiceGoodsService eshopServiceGoodsService;
 
     @RequestMapping(value="/list",method = RequestMethod.POST )
-    @ApiOperation(value = "分页列表",response = EshopGoodsShelves.class)
+    @ApiOperation(value = "分页列表",response = EshopServiceGoods.class)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", dataType="int", name = "pageNum", value = "页码，为空时默认1" ),
             @ApiImplicitParam(paramType = "query", dataType="int", name = "pageSize", value = "页数,为空时默认20" ),
@@ -40,47 +38,47 @@ public class EshopGoodsShelvesController {
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
     public ResultResponse pageList(@RequestParam(defaultValue = "1") Integer pageNum,
                                    @RequestParam(defaultValue = "20")Integer pageSize, String search)  {
-        return ResultUtil.getSuccess(eshopGoodsShelvesService.pageList(pageNum,pageSize,search));
+        return ResultUtil.getSuccess(eshopServiceGoodsService.pageList(pageNum,pageSize,search));
     }
 
 
     @RequestMapping(value="/save",method = RequestMethod.POST )
     @ApiOperation(value = "保存",response = ResultResponse.class)
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
-    public ResultResponse save(EshopGoodsShelves eshopGoodsShelves){
-		eshopGoodsShelvesService.insert(eshopGoodsShelves);
+    public ResultResponse save(EshopServiceGoods eshopServiceGoods){
+		eshopServiceGoodsService.insert(eshopServiceGoods);
         return ResultUtil.getSuccess();
     }
 
     @RequestMapping(value="/info",method = RequestMethod.GET )
-    @ApiOperation(value = "获取信息",response = EshopGoodsShelves.class)
+    @ApiOperation(value = "获取信息",response = EshopServiceGoods.class)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", dataType="String", name = "id", value = "id" ),
     })
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
     public ResultResponse info(String id ){
-		EshopGoodsShelves eshopGoodsShelves = eshopGoodsShelvesService.selectByPrimaryKey(id);
-        if (eshopGoodsShelves == null ){
+		EshopServiceGoods eshopServiceGoods = eshopServiceGoodsService.selectByPrimaryKey(id);
+        if (eshopServiceGoods == null ){
             return ResultUtil.getError(ResultCode.DATA_NOT_EXIST.getCode());
         }
-        return ResultUtil.getSuccess(eshopGoodsShelves);
+        return ResultUtil.getSuccess(eshopServiceGoods);
     }
 
 
     @RequestMapping(value="/update",method = RequestMethod.POST)
     @ApiOperation(value = "更新",response = ResultResponse.class)
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
-    public ResultResponse update(EshopGoodsShelves vo){
+    public ResultResponse update(EshopServiceGoods vo){
         if ( vo == null) {
             return ResultUtil.getError(ResultCode.PARAM_ERROR.getCode());
         }
-		EshopGoodsShelves po = eshopGoodsShelvesService.selectByPrimaryKey(vo.getId());
+		EshopServiceGoods po = eshopServiceGoodsService.selectByPrimaryKey(vo.getId());
         if ( po == null) {
             return ResultUtil.getError(ResultCode.PARAM_ERROR.getCode());
         }
         BeanUtils.copyProperties(vo,po, BeanUtils.getNullPropertyNames(vo));
         //更新
-	    eshopGoodsShelvesService.updateByPrimaryKey(po);
+	    eshopServiceGoodsService.updateByPrimaryKey(po);
         return ResultUtil.getSuccess();
     }
 	
@@ -96,7 +94,7 @@ public class EshopGoodsShelvesController {
         if (ArrayUtils.isEmpty(ids)) {
             return ResultUtil.getError(ResultCode.PARAM_ERROR.getCode());
         }
-		eshopGoodsShelvesService.deleteBatch(ids);
+		eshopServiceGoodsService.deleteBatch(ids);
         return ResultUtil.getSuccess();
     }
 

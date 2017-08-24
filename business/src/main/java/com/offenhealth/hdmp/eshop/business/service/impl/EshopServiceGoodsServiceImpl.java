@@ -9,9 +9,9 @@ import com.github.pagehelper.PageInfo;
 
 import com.offenhealth.hdmp.eshop.business.base.BaseService;
 import com.offenhealth.hdmp.eshop.business.base.IBaseDao;
-import com.offenhealth.hdmp.eshop.business.service.EshopGoodsShelvesService;
-import com.offenhealth.hdmp.eshop.business.dao.EshopGoodsShelvesMapper;
-import com.offenhealth.hdmp.eshop.bean.entity.EshopGoodsShelves;
+import com.offenhealth.hdmp.eshop.business.service.EshopServiceGoodsService;
+import com.offenhealth.hdmp.eshop.business.dao.EshopServiceGoodsMapper;
+import com.offenhealth.hdmp.eshop.bean.entity.EshopServiceGoods;
 import java.util.List;
 
 
@@ -20,19 +20,19 @@ import java.util.List;
  * 
  *
  * @author hhy
- * @date 2017-08-21 15:36:33
+ * @date 2017-08-24 13:44:59
  */
-@Service("eshopGoodsShelvesService")
+@Service("eshopServiceGoodsService")
 @Transactional
-public class EshopGoodsShelvesServiceImpl extends BaseService<EshopGoodsShelves,String> implements EshopGoodsShelvesService  {
+public class EshopServiceGoodsServiceImpl extends BaseService<EshopServiceGoods,String> implements EshopServiceGoodsService  {
 
 	@Autowired
-	private EshopGoodsShelvesMapper eshopGoodsShelvesMapper;
+	private EshopServiceGoodsMapper eshopServiceGoodsMapper;
 
 
     @Override
-    protected IBaseDao <EshopGoodsShelves> getBaseDao() {
-        return eshopGoodsShelvesMapper;
+    protected IBaseDao <EshopServiceGoods> getBaseDao() {
+        return eshopServiceGoodsMapper;
     }
 
     /**
@@ -43,10 +43,10 @@ public class EshopGoodsShelvesServiceImpl extends BaseService<EshopGoodsShelves,
      * @return PageInfo 分页信息
      */
     @Override
-    public PageInfo<EshopGoodsShelves> pageList(int pageNum, int pageSize, String search) {
+    public PageInfo<EshopServiceGoods> pageList(int pageNum, int pageSize, String search) {
         PageHelper.startPage(pageNum, pageSize);
-        List<EshopGoodsShelves> list = eshopGoodsShelvesMapper.pageList(search);
-        PageInfo <EshopGoodsShelves> pageInfo = new PageInfo <>(list);
+        List<EshopServiceGoods> list = eshopServiceGoodsMapper.pageList(search);
+        PageInfo <EshopServiceGoods> pageInfo = new PageInfo <>(list);
         return pageInfo;
     }
 
@@ -56,6 +56,6 @@ public class EshopGoodsShelvesServiceImpl extends BaseService<EshopGoodsShelves,
      */
     @Override
     public void deleteBatch(String [] ids){
-        eshopGoodsShelvesMapper.deleteBatch(ids);
+        eshopServiceGoodsMapper.deleteBatch(ids);
     }
 }

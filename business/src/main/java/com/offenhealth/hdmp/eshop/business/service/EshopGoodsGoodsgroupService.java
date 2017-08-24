@@ -7,7 +7,7 @@ import com.github.pagehelper.PageInfo;
 /**
  * 
  * @author hhy
- * @date 2017-08-21 15:36:33
+ * @date 2017-08-24 13:44:58
  */
 public interface EshopGoodsGoodsgroupService  extends IBaseService<EshopGoodsGoodsgroup, String> {
 

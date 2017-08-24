@@ -10,6 +10,7 @@
         <result property="goodsName" column="GOODS_NAME"/>
         <result property="price" column="PRICE"/>
         <result property="weight" column="WEIGHT"/>
+        <result property="details" column="DETAILS"/>
         <result property="goodsNum" column="GOODS_NUM"/>
         <result property="goodsPictureIdlist" column="GOODS_PICTURE_IDLIST"/>
         <result property="amount" column="AMOUNT"/>
