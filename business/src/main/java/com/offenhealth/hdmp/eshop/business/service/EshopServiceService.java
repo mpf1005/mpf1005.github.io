@@ -1,15 +1,15 @@
 package com.offenhealth.hdmp.eshop.business.service;
 
-import  com.offenhealth.hdmp.eshop.bean.entity.EshopGoodsShelves;
+import  com.offenhealth.hdmp.eshop.bean.entity.EshopService;
 import  com.offenhealth.hdmp.eshop.business.base.IBaseService;
 import com.github.pagehelper.PageInfo;
 
 /**
  * 
  * @author hhy
- * @date 2017-08-21 15:36:33
+ * @date 2017-08-24 13:44:59
  */
-public interface EshopGoodsShelvesService  extends IBaseService<EshopGoodsShelves, String> {
+public interface EshopServiceService  extends IBaseService<EshopService, String> {
 
 
     /**
@@ -19,7 +19,7 @@ public interface EshopGoodsShelvesService  extends IBaseService<EshopGoodsShelve
      * @param search  搜索内容
      * @return PageInfo 分页信息
      */
-    public PageInfo<EshopGoodsShelves> pageList(int pageNum, int pageSize, String search) ;
+    public PageInfo<EshopService> pageList(int pageNum, int pageSize, String search) ;
 
     /**
      * 批量删除

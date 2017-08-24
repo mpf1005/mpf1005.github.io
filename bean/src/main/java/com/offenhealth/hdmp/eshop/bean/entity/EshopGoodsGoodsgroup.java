@@ -14,7 +14,7 @@ import javax.persistence.Id;
  * 
  * 
  * @author hhy
- * @date 2017-08-21 15:36:33
+ * @date 2017-08-24 13:44:58
  */
 @ApiModel(value = "EshopGoodsGoodsgroup",description = "" )
 public class EshopGoodsGoodsgroup   {

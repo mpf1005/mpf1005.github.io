@@ -1,6 +1,5 @@
 package com.offenhealth.hdmp.eshop.rest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,9 +17,9 @@ import com.offenhealth.hdmp.eshop.business.service.EshopGoodsService;
 
 /**
  * 
- * 实物商品
+ * 
  * @author hhy
- * @date 2017-08-21 15:36:33
+ * @date 2017-08-24 13:44:59
  */
 @RestController
 @RequestMapping("eshopgoods")
@@ -67,7 +66,7 @@ public class EshopGoodsController {
 
 
     @RequestMapping(value="/update",method = RequestMethod.POST)
-    @ApiOperation(value = "商品更新",response = ResultResponse.class)
+    @ApiOperation(value = "更新",response = ResultResponse.class)
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
     public ResultResponse update(EshopGoods vo){
         if ( vo == null) {
@@ -85,18 +84,18 @@ public class EshopGoodsController {
 	
 
 
-    @RequestMapping(value="/{id}/deleteBatch",method = RequestMethod.POST)
-    @ApiOperation(value = "根据商品ID删除商品",response = ResultResponse.class)
+    @RequestMapping(value="/deleteBatch",method = RequestMethod.POST)
+    @ApiOperation(value = "批量删除",response = ResultResponse.class)
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", dataType="string", name = "id", value = "id" ),
+            @ApiImplicitParam(paramType = "query", dataType="array", name = "ids", value = "id数组" ),
     })
     @ApiResponses({ @ApiResponse(code = 500,message = "服务器异常",response= ResultResponse.class)})
-    public ResultResponse deleteBatch(String id){
-        if (StringUtils.isEmpty(id)) {
+    public ResultResponse deleteBatch(String [] ids){
+        if (ArrayUtils.isEmpty(ids)) {
             return ResultUtil.getError(ResultCode.PARAM_ERROR.getCode());
         }
-        int i = eshopGoodsService.deleteByGoodsId(id);
-        return ResultUtil.getSuccess(i);
+		eshopGoodsService.deleteBatch(ids);
+        return ResultUtil.getSuccess();
     }
 
 	

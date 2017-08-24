@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
  * 
  * 
  * @author hhy
- * @date 2017-08-21 15:36:32
+ * @date 2017-08-24 13:44:59
  */
 public interface EshopGoodsgroupMapper extends IBaseDao<EshopGoodsgroup> {
 

@@ -20,7 +20,7 @@ import java.util.List;
  * 
  *
  * @author hhy
- * @date 2017-08-21 15:36:33
+ * @date 2017-08-24 13:44:59
  */
 @Service("eshopGoodsService")
 @Transactional
@@ -34,41 +34,6 @@ public class EshopGoodsServiceImpl extends BaseService<EshopGoods,String> implem
     protected IBaseDao <EshopGoods> getBaseDao() {
         return eshopGoodsMapper;
     }
-
-    /*
-    *@Author:johnson
-    *@Description:商品添加
-    *@Date:16:09 2017/8/21
-    */
-    @Override
-    public int AddGoods(EshopGoods eshopGoods) {
-        int insert = eshopGoodsMapper.insert(eshopGoods);
-        return insert;
-    }
-
-    /*
-    *@Author:johnson
-    *@Description:商品删除
-    *@Date:16:21 2017/8/21
-    */
-    @Override
-    public int deleteByGoodsId(String id){
-        int i = eshopGoodsMapper.deleteByExample(id);
-        return i;
-    }
-
-    /*
-    *@Author:johnson
-    *@Description:商品修改
-    *@Date:16:19 2017/8/21
-    */
-    @Override
-    public int updateGoods(EshopGoods eshopGoods){
-        int i = eshopGoodsMapper.updateByPrimaryKey(eshopGoods);
-        return i;
-    }
-
-
 
     /**
      * 分页

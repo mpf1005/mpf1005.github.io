@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.offenhealth.hdmp.eshop.business.dao.EshopGoodsShelvesMapper">
+<mapper namespace="com.offenhealth.hdmp.eshop.business.dao.EshopServiceMapper">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.offenhealth.hdmp.eshop.bean.entity.EshopGoodsShelves" id="eshopGoodsShelvesMap">
+    <resultMap type="com.offenhealth.hdmp.eshop.bean.entity.EshopService" id="eshopServiceMap">
         <result property="id" column="ID"/>
-        <result property="goodsId" column="GOODS_ID"/>
-        <result property="goodsShelvesId" column="GOODS_SHELVES_ID"/>
+        <result property="code" column="CODE"/>
+        <result property="name" column="NAME"/>
+        <result property="price" column="PRICE"/>
+        <result property="groupid" column="GROUPID"/>
+        <result property="buyDays" column="BUY_DAYS"/>
+        <result property="exporeDate" column="EXPORE_DATE"/>
+        <result property="validityStatus" column="VALIDITY_STATUS"/>
+        <result property="pictureIdlist" column="PICTURE_IDLIST"/>
+        <result property="details" column="DETAILS"/>
+        <result property="amount" column="AMOUNT"/>
         <result property="description" column="DESCRIPTION"/>
         <result property="status" column="STATUS"/>
         <result property="createUser" column="CREATE_USER"/>
@@ -18,8 +26,8 @@
     </resultMap>
 
 
-    <select id="pageList" resultMap="eshopGoodsShelvesMap">
-        SELECT * FROM eshop_goods_shelves
+    <select id="pageList" resultMap="eshopServiceMap">
+        SELECT * FROM eshop_service
         WHERE 1 = 1
         <if test="search != null and search.trim() != ''">
         </if>
@@ -27,7 +35,7 @@
 
 
 	<delete id="deleteBatch">
-		delete from eshop_goods_shelves where ID in 
+		delete from eshop_service where ID in 
 		<foreach item="id" collection="ids" open="(" separator="," close=")">
 			#{id}
 		</foreach>
