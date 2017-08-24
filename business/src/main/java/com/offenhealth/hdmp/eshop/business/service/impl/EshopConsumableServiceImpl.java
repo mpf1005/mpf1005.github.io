@@ -60,7 +60,8 @@ public class EshopConsumableServiceImpl extends BaseService<EshopConsumable,Stri
         int insert = 0;
         if (eshopConsumableVO!=null){
         try {
-            eshopConsumableVO.setCode("11011001");
+            eshopConsumableVO.setCode("11011661");
+            eshopConsumableVO.setStatus("2");
             eshopConsumableVO.setCreateUser(UserUtil.getuser());
             eshopConsumableVO.setCreateTime(new Date());
             eshopConsumableVO.setLastMTime(new Date());
@@ -94,10 +95,37 @@ public class EshopConsumableServiceImpl extends BaseService<EshopConsumable,Stri
   *@Description:更新耗材
   *@Date:10:06 2017/8/22
   */
-    public int updateConsumable(EshopConsumable eshopConsumable){
-        int i = eshopConsumableMapper.updateByPrimaryKey(eshopConsumable);
+
+    public int updateConsumable(EshopConsumableVO eshopConsumableVO){
+        int i=0;
+        EshopConsumableGroup eshopConsumableGroup=null;
+        if (eshopConsumableVO!=null){
+            i = eshopConsumableMapper.updateByPrimaryKey(eshopConsumableVO);
+            if (eshopConsumableVO.getGroupIdList()!=null) {
+                String[] consumableGroupIds = eshopConsumableVO.getGroupIdList();
+                List<EshopConsumableGroup> eshopConsumableGroups = eshopConsumableGroupMapper.selectConsGroupByConId(eshopConsumableVO.getId());//根据id查询耗材分组列表
+                if (eshopConsumableGroups!=null) {
+                    for (EshopConsumableGroup eshopConsGroup : eshopConsumableGroups) {
+                        eshopConsumableGroupMapper.deleteByPrimaryKey(eshopConsGroup);
+                    }
+                    for (String id : consumableGroupIds) {
+                        eshopConsumableGroup = new EshopConsumableGroup();
+                        eshopConsumableGroup.setStatus("1");
+                        eshopConsumableGroup.setCreateTime(new Date());
+                        eshopConsumableGroup.setCreateUser(UserUtil.getuser());
+                        eshopConsumableGroup.setLastMTime(new Date());
+                        eshopConsumableGroup.setLastMUser(UserUtil.getuser());
+                        eshopConsumableGroup.setConId(eshopConsumableVO.getId());
+                        eshopConsumableGroup.setGroupId(id);
+                        eshopConsumableGroupMapper.insert(eshopConsumableGroup);
+                    }
+                }
+            }
+        }
         return i;
     }
+
+
 
 
     /* *@Author:johnson
