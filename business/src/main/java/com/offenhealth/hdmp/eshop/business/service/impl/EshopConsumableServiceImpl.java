@@ -4,7 +4,6 @@ package com.offenhealth.hdmp.eshop.business.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.offenhealth.hdmp.eshop.bean.entity.EshopConPro;
-import com.offenhealth.hdmp.eshop.bean.entity.EshopCongroup;
 import com.offenhealth.hdmp.eshop.bean.entity.EshopConsumable;
 import com.offenhealth.hdmp.eshop.bean.entity.EshopConsumableGroup;
 import com.offenhealth.hdmp.eshop.bean.entity.EshopOutput;
@@ -12,7 +11,6 @@ import com.offenhealth.hdmp.eshop.bean.vo.EshopConsumableVO;
 import com.offenhealth.hdmp.eshop.business.base.BaseService;
 import com.offenhealth.hdmp.eshop.business.base.IBaseDao;
 import com.offenhealth.hdmp.eshop.business.dao.EshopConProMapper;
-import com.offenhealth.hdmp.eshop.business.dao.EshopCongroupMapper;
 import com.offenhealth.hdmp.eshop.business.dao.EshopConsumableGroupMapper;
 import com.offenhealth.hdmp.eshop.business.dao.EshopConsumableMapper;
 import com.offenhealth.hdmp.eshop.business.dao.EshopOutputMapper;
@@ -62,7 +60,8 @@ public class EshopConsumableServiceImpl extends BaseService<EshopConsumable,Stri
         int insert = 0;
         if (eshopConsumableVO!=null){
         try {
-            eshopConsumableVO.setCode("11011001");
+            eshopConsumableVO.setCode("11011661");
+            eshopConsumableVO.setStatus("2");
             eshopConsumableVO.setCreateUser(UserUtil.getuser());
             eshopConsumableVO.setCreateTime(new Date());
             eshopConsumableVO.setLastMTime(new Date());
@@ -101,13 +100,13 @@ public class EshopConsumableServiceImpl extends BaseService<EshopConsumable,Stri
         int i=0;
         EshopConsumableGroup eshopConsumableGroup=null;
         if (eshopConsumableVO!=null){
-        i = eshopConsumableMapper.updateByPrimaryKey(eshopConsumableVO);
+            i = eshopConsumableMapper.updateByPrimaryKey(eshopConsumableVO);
             if (eshopConsumableVO.getGroupIdList()!=null) {
                 String[] consumableGroupIds = eshopConsumableVO.getGroupIdList();
                 List<EshopConsumableGroup> eshopConsumableGroups = eshopConsumableGroupMapper.selectConsGroupByConId(eshopConsumableVO.getId());//根据id查询耗材分组列表
                 if (eshopConsumableGroups!=null) {
                     for (EshopConsumableGroup eshopConsGroup : eshopConsumableGroups) {
-                        eshopConsumableGroupMapper.delete(eshopConsGroup);
+                        eshopConsumableGroupMapper.deleteByPrimaryKey(eshopConsGroup);
                     }
                     for (String id : consumableGroupIds) {
                         eshopConsumableGroup = new EshopConsumableGroup();
@@ -125,6 +124,8 @@ public class EshopConsumableServiceImpl extends BaseService<EshopConsumable,Stri
         }
         return i;
     }
+
+
 
 
     /* *@Author:johnson
