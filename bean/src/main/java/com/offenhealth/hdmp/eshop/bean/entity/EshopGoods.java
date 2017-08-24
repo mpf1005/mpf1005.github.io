@@ -15,7 +15,7 @@ import javax.persistence.Id;
  * 
  * 
  * @author hhy
- * @date 2017-08-21 15:36:33
+ * @date 2017-08-24 13:44:59
  */
 @ApiModel(value = "EshopGoods",description = "" )
 public class EshopGoods   {
@@ -27,11 +27,13 @@ public class EshopGoods   {
 		@ApiModelProperty(value  = "")
 		private String code;
 		@ApiModelProperty(value  = "")
-		private String goodsName;
+		private String Name;
 		@ApiModelProperty(value  = "")
 		private BigDecimal price;
 		@ApiModelProperty(value  = "")
 		private BigDecimal weight;
+		@ApiModelProperty(value  = "")
+		private String details;
 		@ApiModelProperty(value  = "")
 		private Integer goodsNum;
 		@ApiModelProperty(value  = "")
@@ -52,7 +54,7 @@ public class EshopGoods   {
 		private Date lastMTime;
 		@ApiModelProperty(value  = "")
 		private String version;
-	
+
 	/**
 	 * 设置：
 	 */
@@ -77,18 +79,15 @@ public class EshopGoods   {
 	public String getCode() {
 		return code;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setGoodsName(String goodsName) {
-		this.goodsName = goodsName;
+
+	public String getName() {
+		return Name;
 	}
-	/**
-	 * 获取：
-	 */
-	public String getGoodsName() {
-		return goodsName;
+
+	public void setName(String name) {
+		Name = name;
 	}
+
 	/**
 	 * 设置：
 	 */
@@ -112,6 +111,18 @@ public class EshopGoods   {
 	 */
 	public BigDecimal getWeight() {
 		return weight;
+	}
+	/**
+	 * 设置：
+	 */
+	public void setDetails(String details) {
+		this.details = details;
+	}
+	/**
+	 * 获取：
+	 */
+	public String getDetails() {
+		return details;
 	}
 	/**
 	 * 设置：

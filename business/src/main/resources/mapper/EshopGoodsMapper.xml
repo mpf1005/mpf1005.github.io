@@ -7,9 +7,10 @@
     <resultMap type="com.offenhealth.hdmp.eshop.bean.entity.EshopGoods" id="eshopGoodsMap">
         <result property="id" column="ID"/>
         <result property="code" column="CODE"/>
-        <result property="goodsName" column="GOODS_NAME"/>
+        <result property="Name" column="NAME"/>
         <result property="price" column="PRICE"/>
         <result property="weight" column="WEIGHT"/>
+        <result property="details" column="DETAILS"/>
         <result property="goodsNum" column="GOODS_NUM"/>
         <result property="goodsPictureIdlist" column="GOODS_PICTURE_IDLIST"/>
         <result property="amount" column="AMOUNT"/>
